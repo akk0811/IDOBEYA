@@ -1,0 +1,18 @@
+# Secrets（絶対にコミットしない）
+**/Secrets.xcconfig
+**/SupabaseSecrets.plist
+.env
+.env.*
+
+# macOS / Xcode
+.DS_Store
+xcuserdata/
+*.xcuserstate
+**/DerivedData/
+
+# Node
+theme/node_modules/
+
+# Swift Package Manager
+**/.build/
+

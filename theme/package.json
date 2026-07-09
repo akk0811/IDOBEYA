@@ -1,0 +1,19 @@
+{
+  "name": "@idobeya/theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IDOBEYA Design System v1.0 — shared design tokens",
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.2"
+  }
+}
