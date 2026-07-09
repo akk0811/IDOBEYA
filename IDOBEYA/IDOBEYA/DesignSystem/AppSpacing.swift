@@ -39,4 +39,13 @@ enum AppSpacing {
 
   /// 64px — 特大スペーサー
   static let massive: CGFloat = 64
+
+  /// 20px — 画面横パディング（`lg` のエイリアス）
+  static let screen: CGFloat = lg
+
+  /// 24px — 片手操作向け下部余白（`xl` のエイリアス）
+  static let thumbClearance: CGFloat = xl
+
+  /// 44pt — HIG 最小タップ領域
+  static let minTapTarget: CGFloat = 44
 }

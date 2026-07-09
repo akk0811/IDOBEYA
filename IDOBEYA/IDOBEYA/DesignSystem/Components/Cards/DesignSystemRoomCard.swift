@@ -1,0 +1,94 @@
+import SwiftUI
+
+struct RoomCard: View {
+  let iconName: String
+  let name: String
+  let description: String
+  let memberCount: Int
+  var badges: [AppBadge.Variant] = []
+  var onTap: (() -> Void)?
+
+  var body: some View {
+    Group {
+      if let onTap {
+        Button(action: onTap) { cardContent }
+          .buttonStyle(.plain)
+      } else {
+        cardContent
+      }
+    }
+    .accessibilityElement(children: .combine)
+    .accessibilityLabel("\(name)、\(memberCount)人が参加")
+  }
+
+  private var cardContent: some View {
+    BaseCard {
+      HStack(alignment: .top, spacing: AppTheme.spacing.sm) {
+        roomIcon
+        VStack(alignment: .leading, spacing: AppTheme.spacing.xxs) {
+          HStack(spacing: AppTheme.spacing.xs) {
+            Text(name)
+              .font(AppTheme.typography.presets.subHeading.font())
+              .foregroundStyle(AppTheme.colors.textPrimary)
+              .lineLimit(1)
+            if !badges.isEmpty {
+              HStack(spacing: AppTheme.spacing.xxs) {
+                ForEach(badges.indices, id: \.self) { index in
+                  AppBadge(variant: badges[index])
+                }
+              }
+            }
+          }
+          Text(description)
+            .font(AppTheme.typography.presets.body.font())
+            .foregroundStyle(AppTheme.colors.textSecondary)
+            .lineLimit(2)
+            .multilineTextAlignment(.leading)
+          memberRow
+        }
+        Spacer(minLength: 0)
+      }
+    }
+  }
+
+  private var roomIcon: some View {
+    Image(systemName: iconName)
+      .font(.system(size: AppTheme.typography.sizes.heading, weight: AppTheme.typography.weights.medium))
+      .foregroundStyle(AppTheme.colors.primary)
+      .frame(width: AppTheme.spacing.xxl, height: AppTheme.spacing.xxl)
+      .background(AppTheme.colors.primary.opacity(0.1))
+      .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.medium))
+  }
+
+  private var memberRow: some View {
+    HStack(spacing: AppTheme.spacing.xxs) {
+      Image(systemName: "person.2")
+        .font(.system(size: AppTheme.typography.sizes.caption))
+      Text("\(memberCount)人が参加")
+        .font(AppTheme.typography.presets.caption.font())
+    }
+    .foregroundStyle(AppTheme.colors.textSecondary)
+    .padding(.top, AppTheme.spacing.xxs)
+  }
+}
+
+#Preview {
+  VStack(spacing: AppTheme.spacing.md) {
+    RoomCard(
+      iconName: "book",
+      name: "夜の読書部屋",
+      description: "毎晩30分、好きな本について語り合う部屋です。",
+      memberCount: 128,
+      badges: [.hot, .joined]
+    )
+    RoomCard(
+      iconName: "paintpalette",
+      name: "週末ハンドメイド",
+      description: "作品を共有して励まし合う趣味の部屋。",
+      memberCount: 42,
+      badges: [.new]
+    )
+  }
+  .padding()
+  .background(AppTheme.colors.background)
+}

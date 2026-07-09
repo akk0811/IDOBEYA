@@ -18,4 +18,5 @@ enum AppTheme {
   typealias radius = AppRadius
   typealias shadow = AppShadow
   typealias animation = AppAnimation
+  typealias iconSize = AppIconSize
 }
