@@ -97,7 +97,10 @@ enum MockNotifications {
     ),
   ]
 
-  static func filtered(by category: NotificationFilter, from notifications: [NotificationItem] = all) -> [NotificationItem] {
+  static func filtered(
+    by category: NotificationFilter,
+    from notifications: [NotificationItem] = all
+  ) -> [NotificationItem] {
     notifications.filter { category.matches($0.type) }
   }
 }

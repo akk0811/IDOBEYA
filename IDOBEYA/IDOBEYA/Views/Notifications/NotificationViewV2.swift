@@ -85,6 +85,8 @@ struct NotificationViewV2: View {
   }
 }
 
+// MARK: - Previews
+
 #Preview("Notification V2") {
   NotificationViewV2()
 }
