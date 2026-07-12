@@ -1,5 +1,7 @@
 import Foundation
 
+// MARK: - Notification Types
+
 enum NotificationType: Hashable {
   case like
   case comment
@@ -26,6 +28,8 @@ enum NotificationFilter: String, CaseIterable, Identifiable, Hashable {
     }
   }
 }
+
+// MARK: - Mock Data
 
 /// 通知画面の表示用ダミーデータ
 struct NotificationItem: Identifiable, Hashable {
@@ -104,6 +108,8 @@ enum MockNotifications {
     notifications.filter { category.matches($0.type) }
   }
 }
+
+// MARK: - Notification Type Helpers
 
 extension NotificationType {
   var systemImageName: String {

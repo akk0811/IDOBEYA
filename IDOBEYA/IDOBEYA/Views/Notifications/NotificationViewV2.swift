@@ -1,5 +1,7 @@
 import SwiftUI
 
+// MARK: - Notification Screen
+
 /// Design System v1.0 ベースの通知画面（STEP8）
 ///
 /// 本番導線には未組み込み。`MainTabView` は従来の `NotificationsView` を使用します。
