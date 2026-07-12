@@ -52,6 +52,7 @@
 		7EB37B650316228328E7C9E6 /* MockPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EE98314BF2139327B18B6D /* MockPosts.swift */; };
 		83814A50FA6793762CDCE6DE /* AppChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = F258C05605662C86DACC7864 /* AppChip.swift */; };
 		851B44FF0B8D7319379DE69D /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD508894CAEF7BF28C0DFB0 /* Badge.swift */; };
+		86ABFF2E11EEAB79753CA087 /* ProfileViewV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF30A9F3DB3E9CEBE4EE6DF2 /* ProfileViewV2.swift */; };
 		88560385D65B5B0C74BCE735 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC6C2D8637C7FC6DEF516CB /* MockData.swift */; };
 		8A54F9B810C44B3EA136D806 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F1CED9C5E72892F0B4DFA69 /* Assets.xcassets */; };
 		8E590DBC43BF3EBE61A9266E /* SearchViewV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110940C6297B313369298D3A /* SearchViewV2.swift */; };
@@ -207,6 +208,7 @@
 		D7F2E753DD29A5C53B7AE362 /* MockComments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComments.swift; sourceTree = "<group>"; };
 		DB6675CEA73562DAAC41BF80 /* AppSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSearchBar.swift; sourceTree = "<group>"; };
 		DB7C188B0E6D21261A63AE71 /* ComposePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposePostViewModel.swift; sourceTree = "<group>"; };
+		DF30A9F3DB3E9CEBE4EE6DF2 /* ProfileViewV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewV2.swift; sourceTree = "<group>"; };
 		DFC0193576301E8ED500C303 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		E15CCBC36792A45BDD7AE6A6 /* CreateRoomVisibilitySection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomVisibilitySection.swift; sourceTree = "<group>"; };
 		E32362AE659B3370C68806A6 /* CreateRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomViewModel.swift; sourceTree = "<group>"; };
@@ -223,7 +225,7 @@
 		FAF9D43FAFA08E18C7ADC164 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		FB8E76C2BA5F54A35727C34B /* AppRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRadius.swift; sourceTree = "<group>"; };
 		FFDE263120D40BB1D1C85DD6 /* SegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControl.swift; sourceTree = "<group>"; };
-		"TEMP_867E19FB-108D-4AFE-9725-F52A95F53358" /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		"TEMP_BDED05BF-A58A-4EE5-BF1F-E47D94476EF6" /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,6 +441,7 @@
 			isa = PBXGroup;
 			children = (
 				808E1815BFC21BD7970C2FF8 /* ProfileView.swift */,
+				DF30A9F3DB3E9CEBE4EE6DF2 /* ProfileViewV2.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -647,10 +650,10 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		"TEMP_02E327F8-3C85-4CC0-8EC8-C0B46FFB4452" /* IDOBEYA */ = {
+		"TEMP_DA33FFCB-05FA-4562-9F82-6E47BA6F1B9A" /* IDOBEYA */ = {
 			isa = PBXGroup;
 			children = (
-				"TEMP_867E19FB-108D-4AFE-9725-F52A95F53358" /* Secrets.xcconfig */,
+				"TEMP_BDED05BF-A58A-4EE5-BF1F-E47D94476EF6" /* Secrets.xcconfig */,
 			);
 			path = IDOBEYA;
 			sourceTree = "<group>";
@@ -813,6 +816,7 @@
 				EFE1BA266DF870411FE588DE /* ProfileHeader.swift in Sources */,
 				ED22B234991CF10C25074E61 /* ProfileView.swift in Sources */,
 				C9E9FE97A9C592C0DE5F1B54 /* ProfileViewModel.swift in Sources */,
+				86ABFF2E11EEAB79753CA087 /* ProfileViewV2.swift in Sources */,
 				FED2FD2ACA40BBE37706F2B2 /* RoomCard.swift in Sources */,
 				FB5051F26CDF66C54451D973 /* RoomChip.swift in Sources */,
 				E7E8F6D49618C403D215B54D /* RoomDetailViewV2.swift in Sources */,
@@ -843,7 +847,7 @@
 /* Begin XCBuildConfiguration section */
 		031CA45C4958057A2C9CF447 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = "TEMP_867E19FB-108D-4AFE-9725-F52A95F53358" /* Secrets.xcconfig */;
+			baseConfigurationReference = "TEMP_BDED05BF-A58A-4EE5-BF1F-E47D94476EF6" /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -866,7 +870,7 @@
 		};
 		36A4BF7226BEEF4731211554 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = "TEMP_867E19FB-108D-4AFE-9725-F52A95F53358" /* Secrets.xcconfig */;
+			baseConfigurationReference = "TEMP_BDED05BF-A58A-4EE5-BF1F-E47D94476EF6" /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -889,7 +893,7 @@
 		};
 		AFC96752845E997AE1685B50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = "TEMP_867E19FB-108D-4AFE-9725-F52A95F53358" /* Secrets.xcconfig */;
+			baseConfigurationReference = "TEMP_BDED05BF-A58A-4EE5-BF1F-E47D94476EF6" /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -948,7 +952,7 @@
 		};
 		FB25452C7625E77B22D561FB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = "TEMP_867E19FB-108D-4AFE-9725-F52A95F53358" /* Secrets.xcconfig */;
+			baseConfigurationReference = "TEMP_BDED05BF-A58A-4EE5-BF1F-E47D94476EF6" /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

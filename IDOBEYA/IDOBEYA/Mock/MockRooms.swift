@@ -366,3 +366,39 @@ enum MockCreatePost {
     CreatePostOption(id: "more", label: "その他", systemImage: "ellipsis"),
   ]
 }
+
+// MARK: - Profile (STEP9)
+
+enum MockProfileRooms {
+  static func joinedRooms(for userID: UUID) -> [HomeRoomItem] {
+    guard userID == MockProfileUserIDs.akiko else { return [] }
+    return akikoJoinedRooms
+  }
+
+  private static let akikoJoinedRooms: [HomeRoomItem] = [
+    HomeRoomItem(
+      id: UUID(uuidString: "D1000000-0000-0000-0000-000000000001")!,
+      iconName: "bubble.left.and.bubble.right",
+      name: "ゆる雑談の部屋",
+      description: "今日あったことを、のんびり共有する場所。批判より共感を大切に。",
+      memberCount: 142,
+      badges: [.joined]
+    ),
+    HomeRoomItem(
+      id: UUID(uuidString: "D3000000-0000-0000-0000-000000000003")!,
+      iconName: "cat",
+      name: "猫好きお茶会",
+      description: "うちの子の写真や、猫あるあるを共有する温かい部屋です。",
+      memberCount: 76,
+      badges: [.joined]
+    ),
+    HomeRoomItem(
+      id: UUID(uuidString: "D6000000-0000-0000-0000-000000000006")!,
+      iconName: "book",
+      name: "静かな読書の部屋",
+      description: "今読んでいる本の感想や、おすすめをゆっくり交換しましょう。",
+      memberCount: 198,
+      badges: [.joined]
+    ),
+  ]
+}
