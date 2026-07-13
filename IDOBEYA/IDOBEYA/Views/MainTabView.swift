@@ -8,7 +8,7 @@ struct MainTabView: View {
     IDOBottomNavigation(selection: $selectedTab, badgeCount: store.unreadNotificationCount) { tab in
       switch tab {
       case .home: HomeViewV2(showBottomTabBar: false)
-      case .search: RoomSearchView(store: store)
+      case .search: SearchViewV2(showBottomTabBar: false)
       case .compose: NavigationStack { ComposePostView(store: store, embeddedInTab: true) }
       case .notifications: NotificationsView(store: store)
       case .profile: ProfileView(store: store)
