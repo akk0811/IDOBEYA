@@ -9,21 +9,21 @@ struct IDOCommentCard: View {
       VStack(alignment: .leading, spacing: 4) {
         HStack {
           Text(comment.authorName)
-            .font(IDOFont.body(.semibold))
-            .foregroundStyle(IDOTheme.text)
+            .font(AppFont.body(.semibold))
+            .foregroundStyle(AppTheme.colors.textPrimary)
           Spacer()
           Text(comment.createdAt, style: .relative)
-            .font(IDOFont.caption())
-            .foregroundStyle(IDOTheme.textSecondary)
+            .font(AppFont.caption())
+            .foregroundStyle(AppTheme.colors.textSecondary)
         }
         Text(comment.body)
-          .font(IDOFont.body())
-          .foregroundStyle(IDOTheme.text)
+          .font(AppFont.body())
+          .foregroundStyle(AppTheme.colors.textPrimary)
           .lineSpacing(3)
       }
     }
     .padding(12)
-    .background(IDOTheme.background)
+    .background(AppTheme.colors.background)
     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
   }
 }

@@ -41,7 +41,11 @@ struct LoginView: View {
 
   private var authHeader: some View {
     VStack(spacing: Theme.Spacing.md) {
-      IDOAvatar(symbol: "drop.fill", size: Theme.IconSize.brand)
+      Image("LoginIcon")
+        .resizable()
+        .scaledToFit()
+        .frame(width: Theme.IconSize.brand, height: Theme.IconSize.brand)
+        .accessibilityLabel("IDOBEYA")
       VStack(spacing: Theme.Spacing.xs) {
         Text(Brand.name)
           .font(IDOFont.brand())

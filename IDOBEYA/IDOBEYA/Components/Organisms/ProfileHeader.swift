@@ -11,11 +11,11 @@ struct IDOProfileHeader: View {
       IDOAvatar(symbol: user.avatarSymbol, size: 72)
       VStack(spacing: 6) {
         Text(user.displayName)
-          .font(IDOFont.title())
-          .foregroundStyle(IDOTheme.text)
+          .font(AppFont.title())
+          .foregroundStyle(AppTheme.colors.textPrimary)
         Text(user.bio)
-          .font(IDOFont.body())
-          .foregroundStyle(IDOTheme.textSecondary)
+          .font(AppFont.body())
+          .foregroundStyle(AppTheme.colors.textSecondary)
           .multilineTextAlignment(.center)
           .lineSpacing(4)
       }
@@ -33,11 +33,11 @@ struct IDOProfileHeader: View {
   private func statItem(value: String, label: String) -> some View {
     VStack(spacing: 4) {
       Text(value)
-        .font(IDOFont.heading())
-        .foregroundStyle(IDOTheme.primary)
+        .font(AppFont.heading())
+        .foregroundStyle(AppTheme.colors.primary)
       Text(label)
-        .font(IDOFont.caption())
-        .foregroundStyle(IDOTheme.textSecondary)
+        .font(AppFont.caption())
+        .foregroundStyle(AppTheme.colors.textSecondary)
     }
   }
 }

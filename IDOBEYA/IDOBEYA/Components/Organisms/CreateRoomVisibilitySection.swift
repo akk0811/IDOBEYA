@@ -4,10 +4,10 @@ struct CreateRoomVisibilitySection: View {
   @Binding var visibility: RoomVisibility
 
   var body: some View {
-    VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
+    VStack(alignment: .leading, spacing: AppTheme.spacing.sm) {
       Text("公開設定")
-        .font(IDOFont.body(.medium))
-        .foregroundStyle(Theme.Color.textSecondary)
+        .font(AppFont.body(.medium))
+        .foregroundStyle(AppTheme.colors.textSecondary)
 
       visibilityOption(
         option: .public,
@@ -37,30 +37,30 @@ struct CreateRoomVisibilitySection: View {
     subtitle: String
   ) -> some View {
     Button { visibility = option } label: {
-      HStack(spacing: Theme.Spacing.sm + 2) {
+      HStack(spacing: AppTheme.spacing.sm + AppTheme.spacing.xxs) {
         Image(systemName: icon)
           .font(.title3)
-          .foregroundStyle(visibility == option ? Theme.Color.primary : Theme.Color.textSecondary)
-          .frame(width: Theme.Spacing.xl + Theme.Spacing.xs)
-        VStack(alignment: .leading, spacing: Theme.Spacing.xxs) {
+          .foregroundStyle(visibility == option ? AppTheme.colors.primary : AppTheme.colors.textSecondary)
+          .frame(width: AppTheme.spacing.xl + AppTheme.spacing.xs)
+        VStack(alignment: .leading, spacing: AppTheme.spacing.xxs) {
           Text(title)
-            .font(IDOFont.body(.semibold))
-            .foregroundStyle(Theme.Color.text)
+            .font(AppFont.body(.semibold))
+            .foregroundStyle(AppTheme.colors.textPrimary)
           Text(subtitle)
-            .font(IDOFont.caption())
-            .foregroundStyle(Theme.Color.textSecondary)
+            .font(AppFont.caption())
+            .foregroundStyle(AppTheme.colors.textSecondary)
         }
         Spacer()
         Image(systemName: visibility == option ? "checkmark.circle.fill" : "circle")
-          .foregroundStyle(visibility == option ? Theme.Color.primary : Theme.Color.border)
+          .foregroundStyle(visibility == option ? AppTheme.colors.primary : AppTheme.colors.border)
       }
-      .padding(Theme.Spacing.md)
+      .padding(AppTheme.spacing.md)
       .idoCard()
       .overlay(
-        RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
-          .stroke(visibility == option ? Theme.Color.primary.opacity(0.4) : Theme.Color.background.opacity(0), lineWidth: 1.5)
+        RoundedRectangle(cornerRadius: AppTheme.radius.large, style: .continuous)
+          .stroke(visibility == option ? AppTheme.colors.primary.opacity(0.4) : AppTheme.colors.background.opacity(0), lineWidth: 1.5)
       )
     }
-    .buttonStyle(IDOPressButtonStyle())
+    .buttonStyle(AppButtonPressStyle())
   }
 }

@@ -11,11 +11,11 @@ struct IDORoomChip: View {
   var body: some View {
     switch kind {
     case .joined:
-      IDOBadge(variant: .label("参加中", color: IDOTheme.accent))
+      IDOBadge(variant: .label("参加中", color: AppTheme.colors.accent))
     case .visibility(let visibility):
       Label(label(for: visibility), systemImage: icon(for: visibility))
-        .font(IDOFont.caption())
-        .foregroundStyle(IDOTheme.textSecondary)
+        .font(AppFont.caption())
+        .foregroundStyle(AppTheme.colors.textSecondary)
     }
   }
 

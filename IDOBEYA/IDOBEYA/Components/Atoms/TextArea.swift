@@ -7,16 +7,16 @@ struct IDOTextArea: View {
 
   var body: some View {
     TextField(placeholder, text: $text, axis: .vertical)
-      .font(IDOFont.body())
-      .foregroundStyle(IDOTheme.text)
-      .lineSpacing(4)
+      .font(AppFont.body())
+      .foregroundStyle(AppTheme.colors.textPrimary)
+      .lineSpacing(AppTheme.spacing.xxs)
       .lineLimit(lineLimit)
-      .padding(16)
-      .background(IDOTheme.card)
-      .clipShape(RoundedRectangle(cornerRadius: IDOTheme.cardRadius, style: .continuous))
+      .padding(AppTheme.spacing.md)
+      .background(AppTheme.colors.surface)
+      .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.large, style: .continuous))
       .overlay(
-        RoundedRectangle(cornerRadius: IDOTheme.cardRadius, style: .continuous)
-          .stroke(IDOTheme.border, lineWidth: 1)
+        RoundedRectangle(cornerRadius: AppTheme.radius.large, style: .continuous)
+          .stroke(AppTheme.colors.border, lineWidth: 1)
       )
   }
 }

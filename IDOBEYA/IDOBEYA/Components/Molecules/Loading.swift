@@ -4,13 +4,13 @@ struct IDOLoading: View {
   var message: String?
 
   var body: some View {
-    VStack(spacing: 12) {
+    VStack(spacing: AppTheme.spacing.sm) {
       ProgressView()
-        .tint(IDOTheme.primary)
+        .tint(AppTheme.colors.primary)
       if let message {
         Text(message)
-          .font(IDOFont.caption())
-          .foregroundStyle(IDOTheme.textSecondary)
+          .font(AppFont.caption())
+          .foregroundStyle(AppTheme.colors.textSecondary)
       }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -25,7 +25,7 @@ struct IDOLoadingOverlay: ViewModifier {
     content.overlay {
       if isLoading {
         ZStack {
-          IDOTheme.background.opacity(0.6)
+          AppTheme.colors.background.opacity(0.6)
           IDOLoading(message: message)
         }
         .ignoresSafeArea()

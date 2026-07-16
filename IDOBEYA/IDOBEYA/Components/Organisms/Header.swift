@@ -23,43 +23,43 @@ struct IDOHeader: View {
   private func sectionHeader(title: String, actionTitle: String?, action: (() -> Void)?) -> some View {
     HStack {
       Text(title)
-        .font(IDOFont.heading())
-        .foregroundStyle(Theme.Color.text)
+        .font(AppFont.heading())
+        .foregroundStyle(AppTheme.colors.textPrimary)
       Spacer()
       if let actionTitle, let action {
         Button(actionTitle, action: action)
-          .font(IDOFont.body(.medium))
-          .foregroundStyle(Theme.Color.primary)
+          .font(AppFont.body(.medium))
+          .foregroundStyle(AppTheme.colors.primary)
           .idoMinTapTarget(alignment: .trailing)
       }
     }
   }
 
   private func greetingHeader(subtitle: String, title: String, caption: String) -> some View {
-    VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
+    VStack(alignment: .leading, spacing: AppTheme.spacing.xs) {
       Text(subtitle)
-        .font(IDOFont.caption())
-        .foregroundStyle(Theme.Color.textSecondary)
+        .font(AppFont.caption())
+        .foregroundStyle(AppTheme.colors.textSecondary)
       Text(title)
-        .font(IDOFont.title())
-        .foregroundStyle(Theme.Color.text)
+        .font(AppFont.title())
+        .foregroundStyle(AppTheme.colors.textPrimary)
       Text(caption)
-        .font(IDOFont.body())
-        .foregroundStyle(Theme.Color.textSecondary)
+        .font(AppFont.body())
+        .foregroundStyle(AppTheme.colors.textSecondary)
         .fixedSize(horizontal: false, vertical: true)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
   }
 
   private func pageHeader(title: String, subtitle: String?) -> some View {
-    VStack(alignment: .leading, spacing: Theme.Spacing.xs) {
+    VStack(alignment: .leading, spacing: AppTheme.spacing.xs) {
       Text(title)
-        .font(IDOFont.title())
-        .foregroundStyle(Theme.Color.text)
+        .font(AppFont.title())
+        .foregroundStyle(AppTheme.colors.textPrimary)
       if let subtitle {
         Text(subtitle)
-          .font(IDOFont.body())
-          .foregroundStyle(Theme.Color.textSecondary)
+          .font(AppFont.body())
+          .foregroundStyle(AppTheme.colors.textSecondary)
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)

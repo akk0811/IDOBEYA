@@ -123,10 +123,10 @@ extension NotificationType {
 
   var iconTintKey: NotificationIconTint {
     switch self {
-    case .like: .accent
+    case .like: .secondary
     case .comment: .primary
     case .room: .primary
-    case .system: .secondary
+    case .system: .accent
     }
   }
 }

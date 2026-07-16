@@ -125,7 +125,7 @@ struct ProfileViewV2: View {
   }
 
   private var comfortNoteText: String {
-    "このユーザーは\(profile.comfortJoinedRoomCount)つの部屋に参加しています。最近は「\(profile.recentActiveRoomName)」でよく話しています。"
+    "最近は「\(profile.recentActiveRoomName)」で、ゆっくり会話に参加しています。"
   }
 
   // MARK: - Activity Summary
@@ -251,6 +251,8 @@ struct ProfileViewV2: View {
               description: room.description,
               memberCount: room.memberCount,
               badges: roomBadges(room.badges),
+              moodBadges: room.moodBadges,
+              activityLabel: room.activityLabel,
               onTap: {}
             )
           }

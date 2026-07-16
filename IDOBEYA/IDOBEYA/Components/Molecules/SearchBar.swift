@@ -5,31 +5,31 @@ struct IDOSearchBar: View {
   var placeholder: String = "部屋を検索"
 
   var body: some View {
-    HStack(spacing: Theme.Spacing.sm) {
+    HStack(spacing: AppTheme.spacing.sm) {
       Image(systemName: "magnifyingglass")
-        .foregroundStyle(Theme.Color.textSecondary)
+        .foregroundStyle(AppTheme.colors.textSecondary)
         .accessibilityHidden(true)
       TextField(placeholder, text: $text)
-        .font(IDOFont.body())
-        .foregroundStyle(Theme.Color.text)
+        .font(AppFont.body())
+        .foregroundStyle(AppTheme.colors.textPrimary)
         .accessibilityLabel("検索")
         .accessibilityHint("部屋名や説明で検索します")
       if !text.isEmpty {
         Button { text = "" } label: {
           Image(systemName: "xmark.circle.fill")
-            .foregroundStyle(Theme.Color.textSecondary)
+            .foregroundStyle(AppTheme.colors.textSecondary)
         }
         .buttonStyle(.plain)
         .idoMinTapTarget()
         .accessibilityLabel("検索をクリア")
       }
     }
-    .padding(Theme.Spacing.sm + 2)
-    .background(Theme.Color.surface)
-    .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+    .padding(AppTheme.spacing.sm + AppTheme.spacing.xxs)
+    .background(AppTheme.colors.surface)
+    .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.large, style: .continuous))
     .overlay(
-      RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
-        .stroke(Theme.Color.border, lineWidth: 1)
+      RoundedRectangle(cornerRadius: AppTheme.radius.large, style: .continuous)
+        .stroke(AppTheme.colors.border, lineWidth: 1)
     )
   }
 }

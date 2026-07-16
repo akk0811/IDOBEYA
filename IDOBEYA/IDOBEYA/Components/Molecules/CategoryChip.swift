@@ -6,22 +6,22 @@ struct IDOCategoryChip: View {
   var isSelected: Bool = false
 
   var body: some View {
-    HStack(spacing: 4) {
+    HStack(spacing: AppTheme.spacing.xxs) {
       if let icon {
         Image(systemName: icon)
-          .font(.caption2)
+          .font(.system(size: AppTheme.typography.sizes.caption, weight: AppTheme.typography.weights.medium))
       }
       Text(title)
-        .font(IDOFont.caption(.medium))
+        .font(AppFont.caption(.medium))
     }
-    .foregroundStyle(isSelected ? Theme.Color.selectedChipForeground : Theme.Color.textSecondary)
-    .padding(.horizontal, Theme.Spacing.sm + 2)
-    .padding(.vertical, Theme.Spacing.xs)
-    .background(isSelected ? Theme.Color.primary : Theme.Color.surface)
+    .foregroundStyle(isSelected ? AppTheme.colors.surface : AppTheme.colors.textSecondary)
+    .padding(.horizontal, AppTheme.spacing.sm)
+    .padding(.vertical, AppTheme.spacing.xs)
+    .background(isSelected ? AppTheme.colors.primary : AppTheme.colors.surface)
     .clipShape(Capsule())
     .overlay(
       Capsule()
-        .stroke(isSelected ? Theme.Color.background.opacity(0) : Theme.Color.border, lineWidth: 1)
+        .stroke(isSelected ? AppTheme.colors.background.opacity(0) : AppTheme.colors.border, lineWidth: 1)
     )
   }
 }

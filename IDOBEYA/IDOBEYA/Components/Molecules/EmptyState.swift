@@ -8,27 +8,27 @@ struct IDOEmptyState: View {
   var action: (() -> Void)?
 
   var body: some View {
-    VStack(spacing: Theme.Spacing.sm) {
+    VStack(spacing: AppTheme.spacing.sm) {
       Image(systemName: icon)
-        .font(.system(size: Theme.IconSize.empty))
-        .foregroundStyle(Theme.Color.primary.opacity(0.6))
+        .font(.system(size: AppTheme.iconSize.empty))
+        .foregroundStyle(AppTheme.colors.primary.opacity(0.6))
         .accessibilityHidden(true)
       Text(title)
-        .font(IDOFont.heading())
-        .foregroundStyle(Theme.Color.text)
+        .font(AppFont.heading())
+        .foregroundStyle(AppTheme.colors.textPrimary)
         .multilineTextAlignment(.center)
       Text(message)
-        .font(IDOFont.body())
-        .foregroundStyle(Theme.Color.textSecondary)
+        .font(AppFont.body())
+        .foregroundStyle(AppTheme.colors.textSecondary)
         .multilineTextAlignment(.center)
-        .lineSpacing(Theme.Spacing.xxs)
+        .lineSpacing(AppTheme.spacing.xxs)
       if let actionTitle, let action {
         IDOButton(title: actionTitle, style: .secondary, isFullWidth: false, action: action)
-          .padding(.top, Theme.Spacing.xs)
+          .padding(.top, AppTheme.spacing.xs)
       }
     }
     .frame(maxWidth: .infinity)
-    .padding(Theme.Spacing.xxl)
+    .padding(AppTheme.spacing.xxl)
     .accessibilityElement(children: .combine)
     .accessibilityLabel("\(title)。\(message)")
   }

@@ -6,27 +6,31 @@ import SwiftUI
 struct SearchViewV2: View {
   let rooms: [SearchRoomItem]
   let recommendedTags: [String]
+  let moodFilters: [String]
   let showBottomTabBar: Bool
 
   @State private var searchText: String
   @State private var selectedCategory: SearchRoomFilter = .all
   @State private var selectedTag: String?
+  @State private var selectedMood: String?
   @State private var selectedTab = BottomTabBar.Tab.search
 
   init(
     rooms: [SearchRoomItem] = MockSearchRooms.all,
     recommendedTags: [String] = MockSearchRooms.recommendedTags,
+    moodFilters: [String] = MockSearchRooms.moodFilters,
     previewSearchText: String? = nil,
     showBottomTabBar: Bool = true
   ) {
     self.rooms = rooms
     self.recommendedTags = recommendedTags
+    self.moodFilters = moodFilters
     self.showBottomTabBar = showBottomTabBar
     _searchText = State(initialValue: previewSearchText ?? "")
   }
 
   private var filteredRooms: [SearchRoomItem] {
-    rooms.filtered(query: searchText, category: selectedCategory, tag: selectedTag)
+    rooms.filtered(query: searchText, category: selectedCategory, tag: selectedTag, mood: selectedMood)
   }
 
   var body: some View {
@@ -40,6 +44,7 @@ struct SearchViewV2: View {
           )
           categorySection
           recommendedTagsSection
+          moodFilterSection
           roomListSection
         }
         .padding(.horizontal, AppTheme.spacing.lg)
@@ -119,6 +124,28 @@ struct SearchViewV2: View {
     }
   }
 
+  private var moodFilterSection: some View {
+    VStack(alignment: .leading, spacing: AppTheme.spacing.sm) {
+      Text("雰囲気で探す")
+        .font(AppTheme.typography.presets.heading.font())
+        .foregroundStyle(AppTheme.colors.textPrimary)
+        .accessibilityAddTraits(.isHeader)
+
+      FlowLayout(spacing: AppTheme.spacing.xs) {
+        ForEach(moodFilters, id: \.self) { mood in
+          AppChip(
+            title: mood,
+            systemImage: moodIcon(for: mood),
+            isSelected: selectedMood == mood,
+            action: {
+              selectedMood = selectedMood == mood ? nil : mood
+            }
+          )
+        }
+      }
+    }
+  }
+
   // MARK: - Room List
 
   private var roomListSection: some View {
@@ -150,6 +177,8 @@ struct SearchViewV2: View {
               description: room.description,
               memberCount: room.memberCount,
               badges: roomBadges(room.badges),
+              moodBadges: room.moodBadges,
+              activityLabel: room.activityLabel,
               onTap: {}
             )
           }
@@ -167,6 +196,21 @@ struct SearchViewV2: View {
       case .hot: .hot
       case .joined: .joined
       }
+    }
+  }
+
+  private func moodIcon(for mood: String) -> String {
+    switch mood {
+    case "初心者歓迎":
+      return "leaf"
+    case "見るだけOK":
+      return "eye"
+    case "匿名OK":
+      return "person.crop.circle.badge.questionmark"
+    case "ゆっくり会話":
+      return "cup.and.saucer"
+    default:
+      return "tag"
     }
   }
 }

@@ -7,20 +7,20 @@ struct IDOFloatingButton: View {
 
   var body: some View {
     Button(action: action) {
-      HStack(spacing: 8) {
+      HStack(spacing: AppTheme.spacing.xs) {
         Image(systemName: icon)
         if let title {
           Text(title)
-            .font(IDOFont.body())
+            .font(AppFont.body())
         }
       }
-      .foregroundStyle(IDOTheme.textSecondary)
-      .padding(.horizontal, title == nil ? 16 : 20)
-      .padding(.vertical, 16)
-      .background(IDOTheme.card)
+      .foregroundStyle(AppTheme.colors.textSecondary)
+      .padding(.horizontal, title == nil ? AppTheme.spacing.md : AppTheme.spacing.lg)
+      .padding(.vertical, AppTheme.spacing.md)
+      .background(AppTheme.colors.surface)
       .clipShape(Capsule())
-      .shadow(color: IDOTheme.cardShadow, radius: 8, x: 0, y: 2)
+      .appShadow(AppTheme.shadow.small)
     }
-    .buttonStyle(IDOPressButtonStyle())
+    .buttonStyle(AppButtonPressStyle())
   }
 }

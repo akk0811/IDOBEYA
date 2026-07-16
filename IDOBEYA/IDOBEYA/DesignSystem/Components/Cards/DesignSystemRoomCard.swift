@@ -6,6 +6,8 @@ struct RoomCard: View {
   let description: String
   let memberCount: Int
   var badges: [AppBadge.Variant] = []
+  var moodBadges: [String] = []
+  var activityLabel: String?
   var onTap: (() -> Void)?
 
   var body: some View {
@@ -34,7 +36,7 @@ struct RoomCard: View {
             if !badges.isEmpty {
               HStack(spacing: AppTheme.spacing.xxs) {
                 ForEach(badges.indices, id: \.self) { index in
-                  AppBadge(variant: badges[index])
+                  AppBadge(variant: badges[index], label: badgeLabel(badges[index]))
                 }
               }
             }
@@ -44,6 +46,18 @@ struct RoomCard: View {
             .foregroundStyle(AppTheme.colors.textSecondary)
             .lineLimit(2)
             .multilineTextAlignment(.leading)
+          if !moodBadges.isEmpty {
+            FlowLayout(spacing: AppTheme.spacing.xxs) {
+              ForEach(moodBadges.prefix(3), id: \.self) { mood in
+                RoomMoodBadge(title: mood)
+              }
+            }
+            .padding(.top, AppTheme.spacing.xxs)
+          }
+          if let activityLabel {
+            RoomActivityLabel(text: activityLabel)
+              .padding(.top, AppTheme.spacing.xxs)
+          }
           memberRow
         }
         Spacer(minLength: 0)
@@ -70,6 +84,15 @@ struct RoomCard: View {
     .foregroundStyle(AppTheme.colors.textSecondary)
     .padding(.top, AppTheme.spacing.xxs)
   }
+
+  private func badgeLabel(_ badge: AppBadge.Variant) -> String? {
+    switch badge {
+    case .hot:
+      return "会話中"
+    default:
+      return nil
+    }
+  }
 }
 
 #Preview {
@@ -79,7 +102,9 @@ struct RoomCard: View {
       name: "夜の読書部屋",
       description: "毎晩30分、好きな本について語り合う部屋です。",
       memberCount: 128,
-      badges: [.hot, .joined]
+      badges: [.hot, .joined],
+      moodBadges: ["初心者歓迎", "見るだけOK"],
+      activityLabel: "今日も会話中"
     )
     RoomCard(
       iconName: "paintpalette",

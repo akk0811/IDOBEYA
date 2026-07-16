@@ -6,8 +6,8 @@ struct IDOTag: View {
 
   var body: some View {
     Text(showsHash ? "#\(text)" : text)
-      .font(IDOFont.caption())
-      .foregroundStyle(IDOTheme.textSecondary)
+      .font(AppFont.caption())
+      .foregroundStyle(AppTheme.colors.textSecondary)
   }
 }
 
@@ -16,7 +16,7 @@ struct IDOTagRow: View {
 
   var body: some View {
     ScrollView(.horizontal, showsIndicators: false) {
-      HStack(spacing: 6) {
+      HStack(spacing: AppTheme.spacing.xs) {
         ForEach(tags, id: \.self) { tag in
           IDOTag(text: tag)
         }

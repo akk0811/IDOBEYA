@@ -5,29 +5,29 @@ struct IDORoomCard: View {
   var compact: Bool = false
 
   var body: some View {
-    VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
-      HStack(alignment: .top, spacing: Theme.Spacing.sm) {
-        VStack(alignment: .leading, spacing: Theme.Spacing.xs - 2) {
+    VStack(alignment: .leading, spacing: AppTheme.spacing.sm) {
+      HStack(alignment: .top, spacing: AppTheme.spacing.sm) {
+        VStack(alignment: .leading, spacing: AppTheme.spacing.xxs) {
           Text(room.name)
-            .font(IDOFont.heading())
-            .foregroundStyle(Theme.Color.text)
+            .font(AppFont.heading())
+            .foregroundStyle(AppTheme.colors.textPrimary)
             .lineLimit(compact ? 1 : 2)
           if !compact {
             Text(room.description)
-              .font(IDOFont.body())
-              .foregroundStyle(Theme.Color.textSecondary)
+              .font(AppFont.body())
+              .foregroundStyle(AppTheme.colors.textSecondary)
               .lineLimit(2)
           }
         }
-        Spacer(minLength: Theme.Spacing.xs)
+        Spacer(minLength: AppTheme.spacing.xs)
         IDORoomChip(kind: .visibility(room.visibility))
       }
 
-      HStack(spacing: Theme.Spacing.xs) {
+      HStack(spacing: AppTheme.spacing.xs) {
         Label("\(room.memberCount)人", systemImage: "person.2")
-          .font(IDOFont.caption())
-          .foregroundStyle(Theme.Color.textSecondary)
-        IDOBadge(variant: .label(room.category, color: Theme.Color.primary))
+          .font(AppFont.caption())
+          .foregroundStyle(AppTheme.colors.textSecondary)
+        IDOBadge(variant: .label(room.category, color: AppTheme.colors.primary))
         if room.isJoined {
           IDORoomChip(kind: .joined)
         }
@@ -37,7 +37,7 @@ struct IDORoomCard: View {
         IDOTagRow(tags: room.tags)
       }
     }
-    .padding(Theme.Spacing.md)
+    .padding(AppTheme.spacing.md)
     .idoCard()
     .accessibilityElement(children: .combine)
   }

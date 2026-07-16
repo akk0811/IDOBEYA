@@ -3,7 +3,7 @@ import SwiftUI
 struct AppBadge: View {
   enum Variant: String, CaseIterable {
     case new = "NEW"
-    case hot = "HOT"
+    case hot = "会話中"
     case joined = "参加中"
     case admin = "管理者"
     case official = "運営"

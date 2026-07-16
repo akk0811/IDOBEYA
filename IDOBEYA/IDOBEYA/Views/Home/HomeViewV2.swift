@@ -113,6 +113,8 @@ struct HomeViewV2: View {
               description: room.description,
               memberCount: room.memberCount,
               badges: roomBadges(room.badges),
+              moodBadges: room.moodBadges,
+              activityLabel: room.activityLabel,
               onTap: {}
             )
             .frame(width: AppTheme.spacing.massive * 4 + AppTheme.spacing.lg)
@@ -127,7 +129,7 @@ struct HomeViewV2: View {
 
   private var trendingSection: some View {
     VStack(alignment: .leading, spacing: AppTheme.spacing.sm) {
-      sectionTitle("最近盛り上がっている部屋")
+      sectionTitle("最近あたたかく動いている部屋")
 
       VStack(spacing: AppTheme.spacing.sm) {
         ForEach(trendingRooms) { room in
@@ -137,6 +139,8 @@ struct HomeViewV2: View {
             description: room.description,
             memberCount: room.memberCount,
             badges: roomBadges(room.badges),
+            moodBadges: room.moodBadges,
+            activityLabel: room.activityLabel,
             onTap: {}
           )
         }

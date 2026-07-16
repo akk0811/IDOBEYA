@@ -6,15 +6,15 @@ struct IDOInput: View {
 
   var body: some View {
     TextField(placeholder, text: $text)
-      .font(IDOFont.body())
-      .foregroundStyle(Theme.Color.text)
-      .padding(Theme.Spacing.md)
-      .frame(minHeight: Theme.Spacing.minTapTarget)
-      .background(Theme.Color.surface)
-      .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
+      .font(AppFont.body())
+      .foregroundStyle(AppTheme.colors.textPrimary)
+      .padding(AppTheme.spacing.md)
+      .frame(minHeight: AppTheme.spacing.minTapTarget)
+      .background(AppTheme.colors.surface)
+      .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.large, style: .continuous))
       .overlay(
-        RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
-          .stroke(Theme.Color.border, lineWidth: 1)
+        RoundedRectangle(cornerRadius: AppTheme.radius.large, style: .continuous)
+          .stroke(AppTheme.colors.border, lineWidth: 1)
       )
       .accessibilityLabel(placeholder)
   }

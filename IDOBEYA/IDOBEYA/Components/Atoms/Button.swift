@@ -23,24 +23,24 @@ struct IDOButton: View {
           ProgressView().tint(foregroundColor)
         } else {
           Text(title)
-            .font(IDOFont.body(.semibold))
+            .font(AppFont.body(.semibold))
             .lineLimit(1)
             .minimumScaleFactor(0.85)
         }
       }
       .foregroundStyle(foregroundColor)
       .frame(maxWidth: isFullWidth ? .infinity : nil)
-      .frame(minHeight: Theme.Spacing.minTapTarget)
-      .padding(.horizontal, isFullWidth ? Theme.Spacing.md : Theme.Spacing.lg)
+      .frame(minHeight: AppTheme.spacing.minTapTarget)
+      .padding(.horizontal, isFullWidth ? AppTheme.spacing.md : AppTheme.spacing.lg)
       .background(backgroundColor)
       .clipShape(Capsule())
       .overlay {
         if style == .secondary {
-          Capsule().stroke(Theme.Color.border, lineWidth: 1)
+          Capsule().stroke(AppTheme.colors.border, lineWidth: 1)
         }
       }
     }
-    .buttonStyle(IDOPressButtonStyle())
+    .buttonStyle(AppButtonPressStyle())
     .disabled(isDisabled || isLoading)
     .accessibilityLabel(title)
     .accessibilityHint(accessibilityHint ?? "")
@@ -49,19 +49,19 @@ struct IDOButton: View {
 
   private var foregroundColor: Color {
     switch style {
-    case .primary: Theme.Color.onPrimary
-    case .danger: Theme.Color.onDanger
-    case .secondary, .ghost: Theme.Color.primary
+    case .primary: AppTheme.colors.surface
+    case .danger: AppTheme.colors.surface
+    case .secondary, .ghost: AppTheme.colors.primary
     }
   }
 
   private var backgroundColor: Color {
-    if isDisabled { return Theme.Color.primary.opacity(0.4) }
+    if isDisabled { return AppTheme.colors.primary.opacity(0.4) }
     switch style {
-    case .primary: return Theme.Color.primary
-    case .secondary: return Theme.Color.surface
-    case .danger: return Theme.Color.danger
-    case .ghost: return Theme.Color.background.opacity(0)
+    case .primary: return AppTheme.colors.primary
+    case .secondary: return AppTheme.colors.surface
+    case .danger: return AppTheme.colors.error
+    case .ghost: return AppTheme.colors.background.opacity(0)
     }
   }
 }

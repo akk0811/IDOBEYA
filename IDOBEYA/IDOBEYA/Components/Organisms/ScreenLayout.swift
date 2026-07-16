@@ -2,7 +2,7 @@ import SwiftUI
 
 /// スクロール性能を優先した画面コンテナ（LazyVStack + 統一余白）
 struct ScreenScrollView<Content: View>: View {
-  var spacing: CGFloat = Theme.Spacing.lg
+  var spacing: CGFloat = AppTheme.spacing.lg
   var showsIndicators: Bool = true
   @ViewBuilder let content: () -> Content
 
@@ -11,12 +11,12 @@ struct ScreenScrollView<Content: View>: View {
       LazyVStack(alignment: .leading, spacing: spacing) {
         content()
       }
-      .padding(.horizontal, Theme.Spacing.screen)
-      .padding(.top, Theme.Spacing.xs)
-      .padding(.bottom, Theme.Spacing.thumbClearance)
+      .padding(.horizontal, AppTheme.spacing.screen)
+      .padding(.top, AppTheme.spacing.xs)
+      .padding(.bottom, AppTheme.spacing.thumbClearance)
     }
     .scrollIndicators(showsIndicators ? .automatic : .hidden)
-    .idoScreenBackground()
+    .appScreenBackground()
   }
 }
 
@@ -30,7 +30,7 @@ struct ListSection<Content: View, Empty: View>: View {
   @ViewBuilder let empty: () -> Empty
 
   var body: some View {
-    VStack(alignment: .leading, spacing: Theme.Spacing.sm) {
+    VStack(alignment: .leading, spacing: AppTheme.spacing.sm) {
       IDOHeader(title: title, actionTitle: actionTitle, action: action)
         .accessibilityAddTraits(.isHeader)
       if isEmpty {

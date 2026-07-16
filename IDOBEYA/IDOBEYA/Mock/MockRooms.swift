@@ -14,6 +14,8 @@ struct HomeRoomItem: Identifiable, Hashable {
   let description: String
   let memberCount: Int
   let badges: [HomeRoomBadge]
+  var moodBadges: [String] = []
+  var activityLabel: String?
 }
 
 enum MockHomeRooms {
@@ -24,7 +26,9 @@ enum MockHomeRooms {
       name: "ゆる雑談の部屋",
       description: "今日あったことを、のんびり共有する場所。批判より共感を大切に。",
       memberCount: 142,
-      badges: []
+      badges: [],
+      moodBadges: ["初心者歓迎", "見るだけOK", "ゆっくり会話"],
+      activityLabel: "今日も会話中"
     ),
     HomeRoomItem(
       id: UUID(uuidString: "D2000000-0000-0000-0000-000000000002")!,
@@ -32,7 +36,9 @@ enum MockHomeRooms {
       name: "旅行好き集合",
       description: "次の旅先やおすすめスポットを、気軽に語り合いましょう。",
       memberCount: 89,
-      badges: [.new]
+      badges: [.new],
+      moodBadges: ["写真歓迎", "見るだけOK"],
+      activityLabel: "会話があります"
     ),
     HomeRoomItem(
       id: UUID(uuidString: "D3000000-0000-0000-0000-000000000003")!,
@@ -40,7 +46,9 @@ enum MockHomeRooms {
       name: "猫好きお茶会",
       description: "うちの子の写真や、猫あるあるを共有する温かい部屋です。",
       memberCount: 76,
-      badges: []
+      badges: [],
+      moodBadges: ["見るだけOK", "ゆっくり会話"],
+      activityLabel: "ゆっくり動いています"
     ),
     HomeRoomItem(
       id: UUID(uuidString: "D4000000-0000-0000-0000-000000000004")!,
@@ -48,18 +56,22 @@ enum MockHomeRooms {
       name: "子育ての井戸端",
       description: "正解はひとつじゃない。安心して話せる子育てコミュニティ。",
       memberCount: 56,
-      badges: [.joined]
+      badges: [.joined],
+      moodBadges: ["相談しやすい", "匿名OK", "承認制"],
+      activityLabel: "最近あたたかく動いています"
     ),
   ]
 
   static let trending: [HomeRoomItem] = [
     HomeRoomItem(
       id: UUID(uuidString: "D5000000-0000-0000-0000-000000000005")!,
-      iconName: "flame",
+      iconName: "moon.stars",
       name: "今夜の夜ふかし部屋",
-      description: "眠れない夜に、そっと寄り添える場所。今週いちばん盛り上がり中。",
+      description: "眠れない夜に、そっと寄り添える場所。無理に話さなくても大丈夫です。",
       memberCount: 312,
-      badges: [.hot]
+      badges: [.hot],
+      moodBadges: ["見るだけOK", "ゆっくり会話"],
+      activityLabel: "今日も会話中"
     ),
     HomeRoomItem(
       id: UUID(uuidString: "D6000000-0000-0000-0000-000000000006")!,
@@ -67,7 +79,9 @@ enum MockHomeRooms {
       name: "静かな読書の部屋",
       description: "今読んでいる本の感想や、おすすめをゆっくり交換しましょう。",
       memberCount: 198,
-      badges: [.hot, .joined]
+      badges: [.hot, .joined],
+      moodBadges: ["ゆっくり会話", "初心者歓迎"],
+      activityLabel: "最近あたたかく動いています"
     ),
     HomeRoomItem(
       id: UUID(uuidString: "D7000000-0000-0000-0000-000000000007")!,
@@ -75,7 +89,9 @@ enum MockHomeRooms {
       name: "ゆるやかカフェ部屋",
       description: "お茶とお菓子の話で、ほっと一息つける部屋です。",
       memberCount: 167,
-      badges: [.hot]
+      badges: [.hot],
+      moodBadges: ["見るだけOK", "ゆっくり会話"],
+      activityLabel: "会話があります"
     ),
   ]
 }
@@ -89,6 +105,7 @@ enum SearchRoomFilter: String, CaseIterable, Identifiable {
   case consultation = "相談"
   case lifestyle = "生活"
   case learning = "学び"
+  case slow = "ゆっくり"
   case local = "地域"
   case new = "新着"
 
@@ -105,12 +122,18 @@ struct SearchRoomItem: Identifiable, Hashable {
   let badges: [HomeRoomBadge]
   let categories: Set<SearchRoomFilter>
   let tags: [String]
+  var moodBadges: [String] = []
+  var activityLabel: String?
   let createdAt: Date
 }
 
 enum MockSearchRooms {
   static let recommendedTags: [String] = [
     "雑談", "旅行", "猫好き", "子育て", "転職", "プログラミング", "読書", "カフェ",
+  ]
+
+  static let moodFilters: [String] = [
+    "初心者歓迎", "見るだけOK", "匿名OK", "ゆっくり会話",
   ]
 
   static let all: [SearchRoomItem] = [
@@ -121,8 +144,10 @@ enum MockSearchRooms {
       description: "気軽に今日のことを話しましょう。批判より共感を大切に。",
       memberCount: 142,
       badges: [.hot],
-      categories: [.popular, .hobby, .lifestyle],
+      categories: [.popular, .hobby, .lifestyle, .slow],
       tags: ["雑談", "カフェ"],
+      moodBadges: ["初心者歓迎", "見るだけOK", "ゆっくり会話"],
+      activityLabel: "今日も会話中",
       createdAt: Date().addingTimeInterval(-86400 * 30)
     ),
     SearchRoomItem(
@@ -134,6 +159,8 @@ enum MockSearchRooms {
       badges: [.new],
       categories: [.hobby, .new],
       tags: ["旅行"],
+      moodBadges: ["写真歓迎", "見るだけOK"],
+      activityLabel: "会話があります",
       createdAt: Date().addingTimeInterval(-86400 * 2)
     ),
     SearchRoomItem(
@@ -143,8 +170,10 @@ enum MockSearchRooms {
       description: "猫の写真や日常をゆるく共有。猫好きさん大歓迎。",
       memberCount: 76,
       badges: [],
-      categories: [.hobby],
+      categories: [.hobby, .slow],
       tags: ["猫好き"],
+      moodBadges: ["見るだけOK", "ゆっくり会話"],
+      activityLabel: "ゆっくり動いています",
       createdAt: Date().addingTimeInterval(-86400 * 14)
     ),
     SearchRoomItem(
@@ -156,6 +185,8 @@ enum MockSearchRooms {
       badges: [.joined],
       categories: [.consultation, .lifestyle],
       tags: ["子育て"],
+      moodBadges: ["相談しやすい", "匿名OK", "承認制"],
+      activityLabel: "最近あたたかく動いています",
       createdAt: Date().addingTimeInterval(-86400 * 21)
     ),
     SearchRoomItem(
@@ -167,6 +198,8 @@ enum MockSearchRooms {
       badges: [.hot],
       categories: [.popular, .consultation],
       tags: ["転職"],
+      moodBadges: ["相談しやすい", "匿名OK"],
+      activityLabel: "会話があります",
       createdAt: Date().addingTimeInterval(-86400 * 10)
     ),
     SearchRoomItem(
@@ -178,6 +211,8 @@ enum MockSearchRooms {
       badges: [.new],
       categories: [.learning, .new],
       tags: ["プログラミング"],
+      moodBadges: ["初心者歓迎", "ゆっくり会話"],
+      activityLabel: "今日も会話中",
       createdAt: Date().addingTimeInterval(-86400 * 3)
     ),
     SearchRoomItem(
@@ -187,8 +222,10 @@ enum MockSearchRooms {
       description: "今読んでいる本の感想や、おすすめをゆっくり交換しましょう。",
       memberCount: 198,
       badges: [.hot, .joined],
-      categories: [.popular, .learning, .hobby],
+      categories: [.popular, .learning, .hobby, .slow],
       tags: ["読書"],
+      moodBadges: ["ゆっくり会話", "初心者歓迎"],
+      activityLabel: "最近あたたかく動いています",
       createdAt: Date().addingTimeInterval(-86400 * 45)
     ),
     SearchRoomItem(
@@ -198,8 +235,10 @@ enum MockSearchRooms {
       description: "お茶とお菓子の話で、ほっと一息つける部屋です。",
       memberCount: 167,
       badges: [],
-      categories: [.lifestyle, .hobby],
+      categories: [.lifestyle, .hobby, .slow],
       tags: ["カフェ", "雑談"],
+      moodBadges: ["見るだけOK", "ゆっくり会話"],
+      activityLabel: "ゆっくり動いています",
       createdAt: Date().addingTimeInterval(-86400 * 18)
     ),
     SearchRoomItem(
@@ -211,6 +250,8 @@ enum MockSearchRooms {
       badges: [.hot],
       categories: [.popular, .local],
       tags: ["雑談"],
+      moodBadges: ["初心者歓迎", "見るだけOK"],
+      activityLabel: "今日も会話中",
       createdAt: Date().addingTimeInterval(-86400 * 60)
     ),
     SearchRoomItem(
@@ -220,8 +261,10 @@ enum MockSearchRooms {
       description: "資格勉強や語学学習。励まし合いながら続けましょう。",
       memberCount: 71,
       badges: [],
-      categories: [.learning],
+      categories: [.learning, .slow],
       tags: ["プログラミング", "読書"],
+      moodBadges: ["ゆっくり会話", "初心者歓迎"],
+      activityLabel: "会話があります",
       createdAt: Date().addingTimeInterval(-86400 * 7)
     ),
   ]
@@ -231,7 +274,8 @@ extension Array where Element == SearchRoomItem {
   func filtered(
     query: String,
     category: SearchRoomFilter,
-    tag: String?
+    tag: String?,
+    mood: String? = nil
   ) -> [SearchRoomItem] {
     let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
 
@@ -260,7 +304,12 @@ extension Array where Element == SearchRoomItem {
         return room.tags.contains(tag)
       }()
 
-      return matchesQuery && matchesCategory && matchesTag
+      let matchesMood: Bool = {
+        guard let mood else { return true }
+        return room.moodBadges.contains(mood)
+      }()
+
+      return matchesQuery && matchesCategory && matchesTag && matchesMood
     }
   }
 }
@@ -282,6 +331,9 @@ struct RoomDetailItem: Identifiable, Hashable {
   let memberCount: Int
   let visibility: RoomDetailVisibility
   let badges: [HomeRoomBadge]
+  var moodBadges: [String] = []
+  var activityLabel: String?
+  var safetyNotes: [String] = []
   let comfortRules: [String]
   let rules: [String]
 }
@@ -295,6 +347,13 @@ enum MockRoomDetails {
     memberCount: 142,
     visibility: .public,
     badges: [.hot, .joined],
+    moodBadges: ["初心者歓迎", "見るだけOK", "匿名OK"],
+    activityLabel: "今日も会話中",
+    safetyNotes: [
+      "この部屋は見るだけでも大丈夫です。",
+      "匿名で話せます。",
+      "困ったときは通報できます。",
+    ],
     comfortRules: [
       "相手を否定しない",
       "個人情報を書かない",
@@ -334,7 +393,7 @@ struct CreatePostOption: Identifiable, Hashable {
 
 enum MockCreatePost {
   static let maxCharacterCount = 500
-  static let helperText = "気軽に投稿してください。あとから削除もできます。"
+  static let helperText = "ゆっくり書いて大丈夫です。あとから削除もできます。"
 
   static let hints: [CreatePostHint] = [
     CreatePostHint(
@@ -382,7 +441,9 @@ enum MockProfileRooms {
       name: "ゆる雑談の部屋",
       description: "今日あったことを、のんびり共有する場所。批判より共感を大切に。",
       memberCount: 142,
-      badges: [.joined]
+      badges: [.joined],
+      moodBadges: ["初心者歓迎", "見るだけOK", "ゆっくり会話"],
+      activityLabel: "今日も会話中"
     ),
     HomeRoomItem(
       id: UUID(uuidString: "D3000000-0000-0000-0000-000000000003")!,
@@ -390,7 +451,9 @@ enum MockProfileRooms {
       name: "猫好きお茶会",
       description: "うちの子の写真や、猫あるあるを共有する温かい部屋です。",
       memberCount: 76,
-      badges: [.joined]
+      badges: [.joined],
+      moodBadges: ["見るだけOK", "ゆっくり会話"],
+      activityLabel: "ゆっくり動いています"
     ),
     HomeRoomItem(
       id: UUID(uuidString: "D6000000-0000-0000-0000-000000000006")!,
@@ -398,7 +461,9 @@ enum MockProfileRooms {
       name: "静かな読書の部屋",
       description: "今読んでいる本の感想や、おすすめをゆっくり交換しましょう。",
       memberCount: 198,
-      badges: [.joined]
+      badges: [.joined],
+      moodBadges: ["ゆっくり会話", "初心者歓迎"],
+      activityLabel: "最近あたたかく動いています"
     ),
   ]
 }

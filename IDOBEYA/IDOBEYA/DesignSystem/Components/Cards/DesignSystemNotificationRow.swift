@@ -80,7 +80,7 @@ struct NotificationRow: View {
   }
 
   private var rowBackground: Color {
-    notification.isRead ? AppTheme.colors.surface : AppTheme.colors.primary.opacity(0.06)
+    notification.isRead ? AppTheme.colors.surface : AppTheme.colors.background
   }
 
   private var iconForeground: Color {

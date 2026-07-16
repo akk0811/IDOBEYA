@@ -174,21 +174,12 @@ struct CreatePostViewV2: View {
   }
 
   private func postOptionItem(_ option: CreatePostOption) -> some View {
-    VStack(spacing: AppTheme.spacing.xs) {
-      IconCircleButton(
-        systemName: option.systemImage,
-        backgroundStyle: .background,
-        accessibilityLabel: option.label,
-        action: {}
-      )
-      .opacity(0.45)
-      .allowsHitTesting(false)
-
-      Text(option.label)
-        .font(AppTheme.typography.presets.caption.font())
-        .foregroundStyle(AppTheme.colors.textSecondary)
-    }
-    .frame(maxWidth: .infinity)
+    ComposeOptionButton(
+      title: option.label,
+      systemImage: option.systemImage,
+      isDisabled: true,
+      action: {}
+    )
   }
 
   // MARK: - Anonymous

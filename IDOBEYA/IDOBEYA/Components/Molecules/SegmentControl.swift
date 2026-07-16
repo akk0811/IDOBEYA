@@ -8,10 +8,12 @@ struct IDOSegmentControl<Item: Hashable>: View {
 
   var body: some View {
     ScrollView(.horizontal, showsIndicators: false) {
-      HStack(spacing: Theme.Spacing.xs) {
+      HStack(spacing: AppTheme.spacing.xs) {
         ForEach(items, id: \.self) { item in
           Button {
-            withAnimation(Motion.standard(reduceMotion: reduceMotion)) {
+            withAnimation(
+              reduceMotion ? nil : AppTheme.animation.presets.transition.animation
+            ) {
               selection = item
             }
           } label: {
@@ -23,7 +25,7 @@ struct IDOSegmentControl<Item: Hashable>: View {
           .accessibilityAddTraits(selection == item ? [.isButton, .isSelected] : .isButton)
         }
       }
-      .padding(.vertical, Theme.Spacing.xxs)
+      .padding(.vertical, AppTheme.spacing.xxs)
     }
     .accessibilityElement(children: .contain)
     .accessibilityLabel("フィルター")

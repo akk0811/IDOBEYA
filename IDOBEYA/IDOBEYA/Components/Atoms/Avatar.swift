@@ -3,7 +3,7 @@ import SwiftUI
 struct IDOAvatar: View {
   let symbol: String
   var size: CGFloat = 44
-  var tint: Color = IDOTheme.primary
+  var tint: Color = AppTheme.colors.primary
 
   var body: some View {
     ZStack {

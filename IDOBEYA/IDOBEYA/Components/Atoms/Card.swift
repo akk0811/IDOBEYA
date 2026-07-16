@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct IDOCard<Content: View>: View {
-  var padding: CGFloat = Theme.Spacing.md
+  var padding: CGFloat = AppTheme.spacing.md
   @ViewBuilder let content: () -> Content
 
   var body: some View {
@@ -12,22 +12,15 @@ struct IDOCard<Content: View>: View {
 }
 
 struct IDOCardModifier: ViewModifier {
-  @Environment(\.colorScheme) private var colorScheme
-
   func body(content: Content) -> some View {
     content
-      .background(Theme.Color.surface)
-      .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous))
-      .shadow(
-        color: Theme.Color.shadow,
-        radius: colorScheme == .dark ? 0 : 8,
-        x: 0,
-        y: colorScheme == .dark ? 0 : 2
-      )
+      .background(AppTheme.colors.surface)
+      .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.large, style: .continuous))
       .overlay(
-        RoundedRectangle(cornerRadius: Theme.Radius.card, style: .continuous)
-          .stroke(colorScheme == .dark ? Theme.Color.border.opacity(0.5) : Theme.Color.background.opacity(0), lineWidth: 1)
+        RoundedRectangle(cornerRadius: AppTheme.radius.large, style: .continuous)
+          .stroke(AppTheme.colors.border, lineWidth: 1)
       )
+      .appShadow(AppTheme.shadow.small)
   }
 }
 

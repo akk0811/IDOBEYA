@@ -54,7 +54,7 @@ struct IDOBottomNavigation<Content: View>: View {
           }
       }
     }
-    .tint(Theme.Color.primary)
+    .tint(AppTheme.colors.primary)
   }
 }
 
