@@ -4,15 +4,20 @@ import SwiftUI
 
 /// Design System v1.0 ベースの通知画面（STEP8）
 ///
-/// 本番導線には未組み込み。`MainTabView` は従来の `NotificationsView` を使用します。
+/// STEP15 より `MainTabView` の通知タブで使用。Preview 単体確認時は `showBottomTabBar: true`（既定）。
 struct NotificationViewV2: View {
   let notifications: [NotificationItem]
+  let showBottomTabBar: Bool
 
   @State private var selectedCategory: NotificationFilter = .all
   @State private var selectedTab = BottomTabBar.Tab.notifications
 
-  init(notifications: [NotificationItem] = MockNotifications.all) {
+  init(
+    notifications: [NotificationItem] = MockNotifications.all,
+    showBottomTabBar: Bool = true
+  ) {
     self.notifications = notifications
+    self.showBottomTabBar = showBottomTabBar
   }
 
   private var filteredNotifications: [NotificationItem] {
@@ -38,7 +43,9 @@ struct NotificationViewV2: View {
         .padding(.bottom, AppTheme.spacing.xl)
       }
 
-      BottomTabBar(selection: $selectedTab)
+      if showBottomTabBar {
+        BottomTabBar(selection: $selectedTab)
+      }
     }
     .background(AppTheme.colors.background)
   }

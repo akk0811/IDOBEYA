@@ -10,7 +10,7 @@ struct MainTabView: View {
       case .home: HomeViewV2(showBottomTabBar: false)
       case .search: SearchViewV2(showBottomTabBar: false)
       case .compose: NavigationStack { CreatePostViewV2(showCancelButton: false) }
-      case .notifications: NotificationsView(store: store)
+      case .notifications: NotificationViewV2(showBottomTabBar: false)
       case .profile: ProfileView(store: store)
       }
     }
