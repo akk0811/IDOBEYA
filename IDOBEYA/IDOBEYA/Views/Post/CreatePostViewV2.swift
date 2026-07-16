@@ -2,11 +2,12 @@ import SwiftUI
 
 /// Design System v1.0 ベースの投稿作成画面（STEP7）
 ///
-/// 本番導線には未組み込み。`MainTabView` は従来の `ComposePostView` を使用します。
+/// STEP14 より `MainTabView` の投稿タブで使用。Preview / モーダル確認時は `showCancelButton: true`（既定）。
 struct CreatePostViewV2: View {
   let destinationRoom: RoomDetailItem
   let hints: [CreatePostHint]
   let options: [CreatePostOption]
+  let showCancelButton: Bool
 
   @State private var bodyText: String
   @State private var isAnonymous: Bool
@@ -18,11 +19,13 @@ struct CreatePostViewV2: View {
     hints: [CreatePostHint] = MockCreatePost.hints,
     options: [CreatePostOption] = MockCreatePost.options,
     previewBodyText: String? = nil,
-    previewIsAnonymous: Bool = false
+    previewIsAnonymous: Bool = false,
+    showCancelButton: Bool = true
   ) {
     self.destinationRoom = destinationRoom
     self.hints = hints
     self.options = options
+    self.showCancelButton = showCancelButton
     _bodyText = State(initialValue: previewBodyText ?? "")
     _isAnonymous = State(initialValue: previewIsAnonymous)
   }
@@ -55,13 +58,18 @@ struct CreatePostViewV2: View {
       AppHeader(title: "新しい投稿")
 
       HStack(spacing: AppTheme.spacing.sm) {
-        Button(action: {}) {
-          Text("キャンセル")
-            .font(AppTheme.typography.presets.body.font())
-            .foregroundStyle(AppTheme.colors.textSecondary)
+        if showCancelButton {
+          Button(action: {}) {
+            Text("キャンセル")
+              .font(AppTheme.typography.presets.body.font())
+              .foregroundStyle(AppTheme.colors.textSecondary)
+          }
+          .frame(minWidth: AppTheme.spacing.huge, minHeight: AppTheme.spacing.huge, alignment: .leading)
+          .accessibilityLabel("キャンセル")
+        } else {
+          Color.clear
+            .frame(width: AppTheme.spacing.huge, height: AppTheme.spacing.huge)
         }
-        .frame(minWidth: AppTheme.spacing.huge, minHeight: AppTheme.spacing.huge, alignment: .leading)
-        .accessibilityLabel("キャンセル")
 
         Spacer(minLength: AppTheme.spacing.xs)
 
