@@ -9,7 +9,7 @@ struct MainTabView: View {
       switch tab {
       case .home: HomeViewV2(showBottomTabBar: false)
       case .search: SearchViewV2(showBottomTabBar: false)
-      case .compose: NavigationStack { ComposePostView(store: store, embeddedInTab: true) }
+      case .compose: NavigationStack { CreatePostViewV2(showCancelButton: false) }
       case .notifications: NotificationsView(store: store)
       case .profile: ProfileView(store: store)
       }
