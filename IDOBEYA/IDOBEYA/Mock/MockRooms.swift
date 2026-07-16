@@ -14,8 +14,8 @@ struct HomeRoomItem: Identifiable, Hashable {
   let description: String
   let memberCount: Int
   let badges: [HomeRoomBadge]
-  var moodBadges: [String] = []
-  var activityLabel: String?
+  let moodBadges: [String]
+  let activityLabel: String?
 }
 
 enum MockHomeRooms {
@@ -122,8 +122,8 @@ struct SearchRoomItem: Identifiable, Hashable {
   let badges: [HomeRoomBadge]
   let categories: Set<SearchRoomFilter>
   let tags: [String]
-  var moodBadges: [String] = []
-  var activityLabel: String?
+  let moodBadges: [String]
+  let activityLabel: String?
   let createdAt: Date
 }
 
@@ -275,14 +275,14 @@ extension Array where Element == SearchRoomItem {
     query: String,
     category: SearchRoomFilter,
     tag: String?,
-    mood: String? = nil
+    mood: String?
   ) -> [SearchRoomItem] {
     let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
 
     return filter { room in
       let matchesQuery: Bool = {
         guard !trimmed.isEmpty else { return true }
-        let haystack = ([room.name, room.description] + room.tags)
+        let haystack = ([room.name, room.description] + room.tags + room.moodBadges)
           .joined(separator: " ")
           .lowercased()
         return haystack.contains(trimmed.lowercased())
