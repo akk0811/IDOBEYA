@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Design System v1.0 ベースのプロフィール画面（STEP9）
 ///
-/// 本番導線には未組み込み。`MainTabView` は従来の `ProfileView` を使用します。
+/// STEP16 より `MainTabView` のプロフィールタブで使用。単体確認時は下部タブを表示します。
 struct ProfileViewV2: View {
   enum Tab: String, CaseIterable, Identifiable {
     case posts = "投稿"
@@ -17,6 +17,7 @@ struct ProfileViewV2: View {
   let profile: ProfileUserItem
   let posts: [ProfilePostItem]
   let joinedRooms: [HomeRoomItem]
+  let showBottomTabBar: Bool
 
   @State private var selectedTab: Tab = .posts
   @State private var selectedBottomTab = BottomTabBar.Tab.profile
@@ -24,11 +25,13 @@ struct ProfileViewV2: View {
   init(
     profile: ProfileUserItem = MockProfileUsers.akiko,
     posts: [ProfilePostItem]? = nil,
-    joinedRooms: [HomeRoomItem]? = nil
+    joinedRooms: [HomeRoomItem]? = nil,
+    showBottomTabBar: Bool = true
   ) {
     self.profile = profile
     self.posts = posts ?? MockProfilePosts.posts(for: profile.id)
     self.joinedRooms = joinedRooms ?? MockProfileRooms.joinedRooms(for: profile.id)
+    self.showBottomTabBar = showBottomTabBar
   }
 
   var body: some View {
@@ -53,7 +56,9 @@ struct ProfileViewV2: View {
         .padding(.bottom, AppTheme.spacing.xl)
       }
 
-      BottomTabBar(selection: $selectedBottomTab)
+      if showBottomTabBar {
+        BottomTabBar(selection: $selectedBottomTab)
+      }
     }
     .background(AppTheme.colors.background)
   }

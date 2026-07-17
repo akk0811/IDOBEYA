@@ -11,7 +11,7 @@ struct MainTabView: View {
       case .search: SearchViewV2(showBottomTabBar: false)
       case .compose: NavigationStack { CreatePostViewV2(showCancelButton: false) }
       case .notifications: NotificationViewV2(showBottomTabBar: false)
-      case .profile: ProfileView(store: store)
+      case .profile: ProfileViewV2(showBottomTabBar: false)
       }
     }
   }
