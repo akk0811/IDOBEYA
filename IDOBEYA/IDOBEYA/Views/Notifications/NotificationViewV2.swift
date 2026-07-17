@@ -6,22 +6,23 @@ import SwiftUI
 ///
 /// STEP15 より `MainTabView` の通知タブで使用。Preview 単体確認時は `showBottomTabBar: true`（既定）。
 struct NotificationViewV2: View {
-  let notifications: [NotificationItem]
   let showBottomTabBar: Bool
 
+  @State private var notificationItems: [NotificationItem]
   @State private var selectedCategory: NotificationFilter = .all
   @State private var selectedTab = BottomTabBar.Tab.notifications
+  @State private var toast: AppToastData?
 
   init(
     notifications: [NotificationItem] = MockNotifications.all,
     showBottomTabBar: Bool = true
   ) {
-    self.notifications = notifications
     self.showBottomTabBar = showBottomTabBar
+    _notificationItems = State(initialValue: notifications)
   }
 
   private var filteredNotifications: [NotificationItem] {
-    MockNotifications.filtered(by: selectedCategory, from: notifications)
+    MockNotifications.filtered(by: selectedCategory, from: notificationItems)
   }
 
   var body: some View {
@@ -30,7 +31,7 @@ struct NotificationViewV2: View {
         title: "通知",
         trailingIcon: "checkmark.circle",
         trailingAccessibilityLabel: "すべて既読",
-        onTrailingTap: {}
+        onTrailingTap: markAllAsRead
       )
 
       ScrollView {
@@ -48,6 +49,7 @@ struct NotificationViewV2: View {
       }
     }
     .background(AppTheme.colors.background)
+    .appToast($toast)
   }
 
   // MARK: - Categories
@@ -77,7 +79,10 @@ struct NotificationViewV2: View {
       } else {
         VStack(spacing: AppTheme.spacing.sm) {
           ForEach(filteredNotifications) { notification in
-            NotificationRow(notification: notification, onTap: {})
+            NotificationRow(
+              notification: notification,
+              onTap: { markAsRead(notification) }
+            )
           }
         }
       }
@@ -91,6 +96,45 @@ struct NotificationViewV2: View {
       message: "新しい反応やお知らせが届くとここに表示されます"
     )
     .padding(.top, AppTheme.spacing.xl)
+  }
+
+  // MARK: - Actions
+
+  private func markAsRead(_ notification: NotificationItem) {
+    guard !notification.isRead,
+          let index = notificationItems.firstIndex(where: { $0.id == notification.id })
+    else {
+      return
+    }
+
+    withAnimation(AppTheme.animation.presets.transition.animation) {
+      notificationItems[index] = notification.markingAsRead()
+    }
+  }
+
+  private func markAllAsRead() {
+    guard notificationItems.contains(where: { !$0.isRead }) else { return }
+
+    withAnimation(AppTheme.animation.presets.transition.animation) {
+      notificationItems = notificationItems.map { $0.markingAsRead() }
+    }
+    toast = AppToastData(
+      message: "すべて確認済みにしました",
+      style: .info
+    )
+  }
+}
+
+private extension NotificationItem {
+  func markingAsRead() -> NotificationItem {
+    NotificationItem(
+      id: id,
+      type: type,
+      title: title,
+      body: body,
+      createdAt: createdAt,
+      isRead: true
+    )
   }
 }
 

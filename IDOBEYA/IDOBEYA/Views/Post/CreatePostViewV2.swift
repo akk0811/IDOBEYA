@@ -10,9 +10,12 @@ struct CreatePostViewV2: View {
   let hints: [CreatePostHint]
   let options: [CreatePostOption]
   let showCancelButton: Bool
+  let dismissAfterPost: Bool
 
   @State private var bodyText: String
   @State private var isAnonymous: Bool
+  @State private var isSubmitting = false
+  @State private var toast: AppToastData?
 
   private let maxCharacterCount = MockCreatePost.maxCharacterCount
 
@@ -22,12 +25,14 @@ struct CreatePostViewV2: View {
     options: [CreatePostOption] = MockCreatePost.options,
     previewBodyText: String? = nil,
     previewIsAnonymous: Bool = false,
-    showCancelButton: Bool = true
+    showCancelButton: Bool = true,
+    dismissAfterPost: Bool = false
   ) {
     self.destinationRoom = destinationRoom
     self.hints = hints
     self.options = options
     self.showCancelButton = showCancelButton
+    self.dismissAfterPost = dismissAfterPost
     _bodyText = State(initialValue: previewBodyText ?? "")
     _isAnonymous = State(initialValue: previewIsAnonymous)
   }
@@ -51,6 +56,7 @@ struct CreatePostViewV2: View {
       }
     }
     .background(AppTheme.colors.background)
+    .appToast($toast)
     .toolbar(.hidden, for: .navigationBar)
   }
 
@@ -76,15 +82,22 @@ struct CreatePostViewV2: View {
 
         Spacer(minLength: AppTheme.spacing.xs)
 
-        Button(action: {}) {
-          Text("投稿")
-            .font(AppTheme.typography.presets.body.font())
-            .fontWeight(AppTheme.typography.weights.semibold)
-            .foregroundStyle(canSubmitPost ? AppTheme.colors.primary : AppTheme.colors.primary.opacity(0.4))
+        Button(action: submitPost) {
+          HStack(spacing: AppTheme.spacing.xxs) {
+            if isSubmitting {
+              ProgressView()
+                .tint(AppTheme.colors.primary)
+            }
+            Text(isSubmitting ? "投稿中…" : "投稿")
+              .font(AppTheme.typography.presets.body.font())
+              .fontWeight(AppTheme.typography.weights.semibold)
+              .foregroundStyle(canSubmitPost && !isSubmitting ? AppTheme.colors.primary : AppTheme.colors.primary.opacity(0.4))
+          }
         }
-        .disabled(!canSubmitPost)
+        .disabled(!canSubmitPost || isSubmitting)
         .frame(minWidth: AppTheme.spacing.huge, minHeight: AppTheme.spacing.huge, alignment: .trailing)
         .accessibilityLabel("投稿")
+        .accessibilityValue(isSubmitting ? "投稿中" : canSubmitPost ? "投稿できます" : "投稿できません")
       }
       .padding(.horizontal, AppTheme.spacing.md)
     }
@@ -251,6 +264,33 @@ struct CreatePostViewV2: View {
   }
 
   // MARK: - Actions
+
+  private func submitPost() {
+    guard canSubmitPost, !isSubmitting else { return }
+
+    isSubmitting = true
+
+    Task {
+      try? await Task.sleep(for: .milliseconds(500))
+
+      await MainActor.run {
+        isSubmitting = false
+        bodyText = ""
+        isAnonymous = false
+        toast = AppToastData(
+          message: "この部屋に投稿しました",
+          style: .success
+        )
+      }
+
+      guard dismissAfterPost else { return }
+
+      try? await Task.sleep(for: .milliseconds(700))
+      await MainActor.run {
+        dismiss()
+      }
+    }
+  }
 
   private func applyHint(_ hint: CreatePostHint) {
     if bodyText.isEmpty {

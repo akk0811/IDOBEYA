@@ -27,6 +27,7 @@
 		1F8E1AAAC1CA64EEE3A553C6 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAC2B54827B44B95A2304CC /* AppTheme.swift */; };
 		22A8C4BA3B8B29EAF3FF4733 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39A557407A0F398A2F9F57D /* LoginView.swift */; };
 		241E255134A7A5A80FC56039 /* DesignSystemRoomCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CDC5036B59F3801784BA27 /* DesignSystemRoomCard.swift */; };
+		26D211AF6E450F6C4DA26B14 /* AppToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A594B3BCD4FAD1DB45ECC02 /* AppToast.swift */; };
 		27827C83BA09B1302F5FB2F0 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55D3466B041EC483303B612 /* Formatters.swift */; };
 		2A2A321C4D8FB34B3F4152FB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91C8F26CC0FE585D656745C /* SettingsView.swift */; };
 		328113B0687CDCCBAE7ACBBD /* SupabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D0739924AC52A5FE3EB17D /* SupabaseService.swift */; };
@@ -175,6 +176,7 @@
 		770E738AE22780198F29477B /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
 		77E52F5581D720DC7B9B481D /* IDOBEYAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDOBEYAApp.swift; sourceTree = "<group>"; };
 		78CDC5036B59F3801784BA27 /* DesignSystemRoomCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemRoomCard.swift; sourceTree = "<group>"; };
+		7A594B3BCD4FAD1DB45ECC02 /* AppToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppToast.swift; sourceTree = "<group>"; };
 		7D4DFABA107970E809C327CF /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
 		7E5A86883980375485F90CA2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		7FB10EF725BA08317E383A38 /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
@@ -241,7 +243,7 @@
 		FAF9D43FAFA08E18C7ADC164 /* SecondaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryButton.swift; sourceTree = "<group>"; };
 		FB8E76C2BA5F54A35727C34B /* AppRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRadius.swift; sourceTree = "<group>"; };
 		FFDE263120D40BB1D1C85DD6 /* SegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentControl.swift; sourceTree = "<group>"; };
-		"TEMP_8F984166-C343-466C-843A-27FB844C11DD" /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		"TEMP_73538E86-9F16-42BB-AD99-573DAD995B96" /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -430,6 +432,7 @@
 		5676258C4E54A65AA4FDA46B /* Feedback */ = {
 			isa = PBXGroup;
 			children = (
+				7A594B3BCD4FAD1DB45ECC02 /* AppToast.swift */,
 				9BA6FC0781944EFC92B03959 /* EmptyStateView.swift */,
 				AEBC12E171E6CB5C45199E21 /* LoadingView.swift */,
 			);
@@ -706,10 +709,10 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		"TEMP_3D2247EA-9CC7-4298-AF1E-2D79B8E06780" /* IDOBEYA */ = {
+		"TEMP_F56C6B0F-2178-4ABC-B24B-58C2D998D6B1" /* IDOBEYA */ = {
 			isa = PBXGroup;
 			children = (
-				"TEMP_8F984166-C343-466C-843A-27FB844C11DD" /* Secrets.xcconfig */,
+				"TEMP_73538E86-9F16-42BB-AD99-573DAD995B96" /* Secrets.xcconfig */,
 			);
 			path = IDOBEYA;
 			sourceTree = "<group>";
@@ -810,6 +813,7 @@
 				FED71D25453E6325569247B3 /* AppTextEditor.swift in Sources */,
 				EEF2C9ECA64F8CE2A49B8794 /* AppTextField.swift in Sources */,
 				1F8E1AAAC1CA64EEE3A553C6 /* AppTheme.swift in Sources */,
+				26D211AF6E450F6C4DA26B14 /* AppToast.swift in Sources */,
 				0EFE7C8D4389C737F17E7584 /* AppTypography.swift in Sources */,
 				97717EACBBE7AE03E808C5A9 /* Avatar.swift in Sources */,
 				851B44FF0B8D7319379DE69D /* Badge.swift in Sources */,
@@ -911,7 +915,7 @@
 /* Begin XCBuildConfiguration section */
 		031CA45C4958057A2C9CF447 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = "TEMP_8F984166-C343-466C-843A-27FB844C11DD" /* Secrets.xcconfig */;
+			baseConfigurationReference = "TEMP_73538E86-9F16-42BB-AD99-573DAD995B96" /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -934,7 +938,7 @@
 		};
 		36A4BF7226BEEF4731211554 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = "TEMP_8F984166-C343-466C-843A-27FB844C11DD" /* Secrets.xcconfig */;
+			baseConfigurationReference = "TEMP_73538E86-9F16-42BB-AD99-573DAD995B96" /* Secrets.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -957,7 +961,7 @@
 		};
 		AFC96752845E997AE1685B50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = "TEMP_8F984166-C343-466C-843A-27FB844C11DD" /* Secrets.xcconfig */;
+			baseConfigurationReference = "TEMP_73538E86-9F16-42BB-AD99-573DAD995B96" /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1016,7 +1020,7 @@
 		};
 		FB25452C7625E77B22D561FB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = "TEMP_8F984166-C343-466C-843A-27FB844C11DD" /* Secrets.xcconfig */;
+			baseConfigurationReference = "TEMP_73538E86-9F16-42BB-AD99-573DAD995B96" /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

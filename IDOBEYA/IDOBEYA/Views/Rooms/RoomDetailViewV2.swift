@@ -20,6 +20,8 @@ struct RoomDetailViewV2: View {
 
   @State private var selectedTab: Tab = .posts
   @State private var isJoined: Bool
+  @State private var isShowingLeaveConfirmation = false
+  @State private var toast: AppToastData?
 
   init(
     room: RoomDetailItem = MockRoomDetails.chatLounge,
@@ -59,6 +61,17 @@ struct RoomDetailViewV2: View {
     .safeAreaInset(edge: .bottom) {
       bottomBar
     }
+    .confirmationDialog(
+      "この部屋から退出しますか？",
+      isPresented: $isShowingLeaveConfirmation,
+      titleVisibility: .visible
+    ) {
+      Button("退出する", role: .destructive) {
+        leaveRoom()
+      }
+      Button("キャンセル", role: .cancel) {}
+    }
+    .appToast($toast)
     .toolbar(.hidden, for: .navigationBar)
   }
 
@@ -146,24 +159,18 @@ struct RoomDetailViewV2: View {
   @ViewBuilder
   private var joinAction: some View {
     if isJoined {
-      HStack(spacing: AppTheme.spacing.xs) {
-        Image(systemName: "checkmark.circle.fill")
-          .foregroundStyle(AppTheme.colors.primary)
-        Text("参加中")
-          .font(AppTheme.typography.presets.body.font())
-          .fontWeight(AppTheme.typography.weights.medium)
-          .foregroundStyle(AppTheme.colors.primary)
+      SecondaryButton(title: "参加しています") {
+        isShowingLeaveConfirmation = true
       }
-      .frame(maxWidth: .infinity)
-      .padding(.vertical, AppTheme.spacing.sm)
-      .background(AppTheme.colors.primary.opacity(0.08))
-      .clipShape(Capsule())
       .padding(.top, AppTheme.spacing.xs)
+      .accessibilityValue("参加中")
+      .accessibilityHint("ダブルタップすると退出確認を表示します")
     } else {
-      PrimaryButton(title: "この部屋をのぞく") {
-        isJoined = true
+      PrimaryButton(title: "この部屋に参加する") {
+        joinRoom()
       }
       .padding(.top, AppTheme.spacing.xs)
+      .accessibilityValue("未参加")
     }
   }
 
@@ -313,9 +320,10 @@ struct RoomDetailViewV2: View {
         if isJoined {
           composePromptButton
         } else {
-          PrimaryButton(title: "会話を見てみる") {
-            isJoined = true
+          PrimaryButton(title: "この部屋に参加する") {
+            joinRoom()
           }
+          .accessibilityValue("未参加")
         }
       }
       .padding(.horizontal, AppTheme.spacing.lg)
@@ -328,7 +336,8 @@ struct RoomDetailViewV2: View {
     NavigationLink {
       CreatePostViewV2(
         destinationRoom: room,
-        showCancelButton: true
+        showCancelButton: true,
+        dismissAfterPost: true
       )
     } label: {
       HStack(spacing: AppTheme.spacing.sm) {
@@ -354,6 +363,26 @@ struct RoomDetailViewV2: View {
   }
 
   // MARK: - Helpers
+
+  private func joinRoom() {
+    withAnimation(AppTheme.animation.presets.transition.animation) {
+      isJoined = true
+    }
+    toast = AppToastData(
+      message: "この部屋が居場所に追加されました",
+      style: .success
+    )
+  }
+
+  private func leaveRoom() {
+    withAnimation(AppTheme.animation.presets.transition.animation) {
+      isJoined = false
+    }
+    toast = AppToastData(
+      message: "この部屋から退出しました",
+      style: .info
+    )
+  }
 
   private func roomBadge(_ badge: HomeRoomBadge) -> AppBadge.Variant {
     switch badge {

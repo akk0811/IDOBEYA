@@ -49,6 +49,10 @@ struct SettingsViewV2: View {
               toggleStates: $toggleStates,
               onRowTap: { _ in }
             )
+
+            if section.id == "notifications", areAllNotificationsDisabled {
+              notificationOffNote
+            }
           }
         }
         .padding(.horizontal, AppTheme.spacing.lg)
@@ -65,6 +69,20 @@ struct SettingsViewV2: View {
   }
 
   // MARK: - Account Card
+
+  private var areAllNotificationsDisabled: Bool {
+    SettingsToggleID.allCases.allSatisfy {
+      toggleStates[$0, default: true] == false
+    }
+  }
+
+  private var notificationOffNote: some View {
+    Text("通知はあとからいつでも変更できます")
+      .font(AppTheme.typography.presets.caption.font())
+      .foregroundStyle(AppTheme.colors.textSecondary)
+      .padding(.horizontal, AppTheme.spacing.md)
+      .accessibilityLabel("通知はあとからいつでも変更できます")
+  }
 
   private var accountCard: some View {
     BaseCard {
