@@ -4,6 +4,8 @@ import SwiftUI
 ///
 /// STEP14 より `MainTabView` の投稿タブで使用。Preview / モーダル確認時は `showCancelButton: true`（既定）。
 struct CreatePostViewV2: View {
+  @Environment(\.dismiss) private var dismiss
+
   let destinationRoom: RoomDetailItem
   let hints: [CreatePostHint]
   let options: [CreatePostOption]
@@ -49,6 +51,7 @@ struct CreatePostViewV2: View {
       }
     }
     .background(AppTheme.colors.background)
+    .toolbar(.hidden, for: .navigationBar)
   }
 
   // MARK: - Header
@@ -59,7 +62,7 @@ struct CreatePostViewV2: View {
 
       HStack(spacing: AppTheme.spacing.sm) {
         if showCancelButton {
-          Button(action: {}) {
+          Button(action: { dismiss() }) {
             Text("キャンセル")
               .font(AppTheme.typography.presets.body.font())
               .foregroundStyle(AppTheme.colors.textSecondary)

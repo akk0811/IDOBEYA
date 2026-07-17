@@ -6,8 +6,11 @@ import SwiftUI
 ///
 /// 本番導線には未組み込み。`MainTabView` は従来の `SettingsView` を使用します。
 struct SettingsViewV2: View {
+  @Environment(\.dismiss) private var dismiss
+
   let profile: ProfileUserItem
   let sections: [SettingsSectionItem]
+  let showBottomTabBar: Bool
 
   @State private var toggleStates: [SettingsToggleID: Bool]
   @State private var selectedBottomTab = BottomTabBar.Tab.profile
@@ -15,10 +18,12 @@ struct SettingsViewV2: View {
   init(
     profile: ProfileUserItem = MockProfileUsers.akiko,
     sections: [SettingsSectionItem] = MockSettings.sections,
-    previewToggleStates: [SettingsToggleID: Bool]? = nil
+    previewToggleStates: [SettingsToggleID: Bool]? = nil,
+    showBottomTabBar: Bool = true
   ) {
     self.profile = profile
     self.sections = sections
+    self.showBottomTabBar = showBottomTabBar
     _toggleStates = State(initialValue: previewToggleStates ?? MockSettings.defaultToggleStates)
   }
 
@@ -30,7 +35,7 @@ struct SettingsViewV2: View {
         leadingAccessibilityLabel: "戻る",
         trailingIcon: "questionmark.circle",
         trailingAccessibilityLabel: "ヘルプ",
-        onLeadingTap: {},
+        onLeadingTap: { dismiss() },
         onTrailingTap: {}
       )
 
@@ -51,9 +56,12 @@ struct SettingsViewV2: View {
         .padding(.bottom, AppTheme.spacing.xl)
       }
 
-      BottomTabBar(selection: $selectedBottomTab)
+      if showBottomTabBar {
+        BottomTabBar(selection: $selectedBottomTab)
+      }
     }
     .background(AppTheme.colors.background)
+    .toolbar(.hidden, for: .navigationBar)
   }
 
   // MARK: - Account Card

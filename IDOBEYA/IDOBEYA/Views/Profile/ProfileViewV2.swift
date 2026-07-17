@@ -21,6 +21,7 @@ struct ProfileViewV2: View {
 
   @State private var selectedTab: Tab = .posts
   @State private var selectedBottomTab = BottomTabBar.Tab.profile
+  @State private var isShowingSettings = false
 
   init(
     profile: ProfileUserItem = MockProfileUsers.akiko,
@@ -40,7 +41,7 @@ struct ProfileViewV2: View {
         title: "プロフィール",
         trailingIcon: "gearshape",
         trailingAccessibilityLabel: "設定",
-        onTrailingTap: {}
+        onTrailingTap: { isShowingSettings = true }
       )
 
       ScrollView {
@@ -61,6 +62,13 @@ struct ProfileViewV2: View {
       }
     }
     .background(AppTheme.colors.background)
+    .navigationDestination(isPresented: $isShowingSettings) {
+      SettingsViewV2(
+        profile: profile,
+        showBottomTabBar: false
+      )
+    }
+    .toolbar(.hidden, for: .navigationBar)
   }
 
   // MARK: - Profile Header

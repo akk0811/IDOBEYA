@@ -10,6 +10,7 @@ struct HomeViewV2: View {
   let showBottomTabBar: Bool
 
   @State private var selectedTab = BottomTabBar.Tab.home
+  @State private var selectedRoom: RoomDetailItem?
 
   private var isEmpty: Bool {
     recommendedRooms.isEmpty && trendingRooms.isEmpty && latestPosts.isEmpty
@@ -51,6 +52,9 @@ struct HomeViewV2: View {
       }
     }
     .background(AppTheme.colors.background)
+    .navigationDestination(item: $selectedRoom) { room in
+      RoomDetailViewV2(room: room)
+    }
   }
 
   // MARK: - Header
@@ -115,7 +119,7 @@ struct HomeViewV2: View {
               badges: roomBadges(room.badges),
               moodBadges: room.moodBadges,
               activityLabel: room.activityLabel,
-              onTap: {}
+              onTap: { selectedRoom = RoomDetailItem(homeRoom: room) }
             )
             .frame(width: AppTheme.spacing.massive * 4 + AppTheme.spacing.lg)
           }
@@ -141,7 +145,7 @@ struct HomeViewV2: View {
             badges: roomBadges(room.badges),
             moodBadges: room.moodBadges,
             activityLabel: room.activityLabel,
-            onTap: {}
+            onTap: { selectedRoom = RoomDetailItem(homeRoom: room) }
           )
         }
       }

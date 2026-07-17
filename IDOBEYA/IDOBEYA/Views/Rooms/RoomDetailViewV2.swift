@@ -4,6 +4,8 @@ import SwiftUI
 ///
 /// 本番導線には未組み込み。`MainTabView` は従来の `RoomView` を使用します。
 struct RoomDetailViewV2: View {
+  @Environment(\.dismiss) private var dismiss
+
   enum Tab: String, CaseIterable, Identifiable {
     case posts = "投稿"
     case members = "メンバー"
@@ -37,7 +39,7 @@ struct RoomDetailViewV2: View {
         title: room.name,
         leadingIcon: "chevron.left",
         trailingIcon: "ellipsis",
-        onLeadingTap: {},
+        onLeadingTap: { dismiss() },
         onTrailingTap: {}
       )
 
@@ -57,6 +59,7 @@ struct RoomDetailViewV2: View {
     .safeAreaInset(edge: .bottom) {
       bottomBar
     }
+    .toolbar(.hidden, for: .navigationBar)
   }
 
   // MARK: - Room Info
@@ -322,7 +325,12 @@ struct RoomDetailViewV2: View {
   }
 
   private var composePromptButton: some View {
-    Button(action: {}) {
+    NavigationLink {
+      CreatePostViewV2(
+        destinationRoom: room,
+        showCancelButton: true
+      )
+    } label: {
       HStack(spacing: AppTheme.spacing.sm) {
         Image(systemName: "square.and.pencil")
           .font(.system(size: AppTheme.typography.sizes.body, weight: AppTheme.typography.weights.medium))
@@ -361,6 +369,69 @@ struct RoomDetailViewV2: View {
     case .official: .official
     case .member: nil
     }
+  }
+}
+
+// MARK: - Navigation Mapping
+
+extension RoomDetailItem {
+  init(homeRoom: HomeRoomItem) {
+    self.init(
+      id: homeRoom.id,
+      iconName: homeRoom.iconName,
+      name: homeRoom.name,
+      description: homeRoom.description,
+      memberCount: homeRoom.memberCount,
+      visibility: .public,
+      badges: homeRoom.badges,
+      moodBadges: homeRoom.moodBadges,
+      activityLabel: homeRoom.activityLabel,
+      safetyNotes: Self.defaultSafetyNotes,
+      comfortRules: Self.defaultComfortRules,
+      rules: Self.defaultRules
+    )
+  }
+
+  init(searchRoom: SearchRoomItem) {
+    self.init(
+      id: searchRoom.id,
+      iconName: searchRoom.iconName,
+      name: searchRoom.name,
+      description: searchRoom.description,
+      memberCount: searchRoom.memberCount,
+      visibility: .public,
+      badges: searchRoom.badges,
+      moodBadges: searchRoom.moodBadges,
+      activityLabel: searchRoom.activityLabel,
+      safetyNotes: Self.defaultSafetyNotes,
+      comfortRules: Self.defaultComfortRules,
+      rules: Self.defaultRules
+    )
+  }
+
+  private static var defaultSafetyNotes: [String] {
+    [
+      "この部屋は見るだけでも大丈夫です。",
+      "個人情報は書かないでください。",
+      "困ったときは通報できます。",
+    ]
+  }
+
+  private static var defaultComfortRules: [String] {
+    [
+      "相手を否定しない",
+      "個人情報を書かない",
+      "困ったら通報できます",
+    ]
+  }
+
+  private static var defaultRules: [String] {
+    [
+      "誹謗中傷は禁止です",
+      "個人情報の投稿は禁止です",
+      "宣伝目的の連投は禁止です",
+      "違和感があれば通報してください",
+    ]
   }
 }
 

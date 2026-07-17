@@ -14,6 +14,7 @@ struct SearchViewV2: View {
   @State private var selectedTag: String?
   @State private var selectedMood: String?
   @State private var selectedTab = BottomTabBar.Tab.search
+  @State private var selectedRoom: RoomDetailItem?
 
   init(
     rooms: [SearchRoomItem] = MockSearchRooms.all,
@@ -57,6 +58,9 @@ struct SearchViewV2: View {
       }
     }
     .background(AppTheme.colors.background)
+    .navigationDestination(item: $selectedRoom) { room in
+      RoomDetailViewV2(room: room)
+    }
   }
 
   // MARK: - Header
@@ -179,7 +183,7 @@ struct SearchViewV2: View {
               badges: roomBadges(room.badges),
               moodBadges: room.moodBadges,
               activityLabel: room.activityLabel,
-              onTap: {}
+              onTap: { selectedRoom = RoomDetailItem(searchRoom: room) }
             )
           }
         }
