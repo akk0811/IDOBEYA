@@ -25,12 +25,7 @@ struct SignUpView: View {
           passwordField
         }
 
-        Toggle(isOn: $viewModel.agreedToTerms) {
-          Text("利用規約とプライバシーポリシーに同意します")
-            .font(IDOFont.caption())
-            .foregroundStyle(Theme.Color.textSecondary)
-        }
-        .tint(Theme.Color.primary)
+        agreementRow
 
         if let errorMessage = viewModel.errorMessage {
           Text(errorMessage)
@@ -69,5 +64,41 @@ struct SignUpView: View {
           .stroke(Theme.Color.border, lineWidth: 1)
       )
       .textContentType(.newPassword)
+  }
+
+  private var agreementRow: some View {
+    HStack(alignment: .center, spacing: Theme.Spacing.sm) {
+      HStack(spacing: 0) {
+        legalLink("利用規約", destination: TermsOfServiceView())
+        Text("と")
+          .foregroundStyle(Theme.Color.textSecondary)
+        legalLink("プライバシーポリシー", destination: PrivacyPolicyView())
+        Text("に同意します")
+          .foregroundStyle(Theme.Color.textSecondary)
+      }
+      .font(IDOFont.caption())
+      .lineLimit(2)
+      .minimumScaleFactor(0.75)
+
+      Spacer(minLength: Theme.Spacing.sm)
+
+      Toggle("", isOn: $viewModel.agreedToTerms)
+        .labelsHidden()
+        .tint(Theme.Color.primary)
+    }
+    .accessibilityElement(children: .contain)
+  }
+
+  private func legalLink<Destination: View>(_ title: String, destination: Destination) -> some View {
+    NavigationLink {
+      destination
+    } label: {
+      Text(title)
+        .font(IDOFont.caption(.medium))
+        .foregroundStyle(Theme.Color.primary)
+        .underline()
+    }
+    .buttonStyle(.plain)
+    .accessibilityLabel(title)
   }
 }
