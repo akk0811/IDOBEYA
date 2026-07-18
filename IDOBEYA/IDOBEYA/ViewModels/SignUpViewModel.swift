@@ -27,43 +27,34 @@ final class SignUpViewModel<Store: AppStoring>: ViewModelBase {
   func submit() {
     guard canSubmit, !isLoading else { return }
 
-    if let validationMessage = validateBeforeSubmit() {
-      errorMessage = validationMessage
+    let trimmedDisplayName = displayName.trimmingCharacters(
+      in: .whitespacesAndNewlines
+    )
+    let trimmedEmail = email.trimmingCharacters(
+      in: .whitespacesAndNewlines
+    )
+
+    guard !trimmedDisplayName.isEmpty else {
+      errorMessage = "表示名を入力してください"
+      return
+    }
+
+    guard !trimmedEmail.isEmpty else {
+      errorMessage = "メールアドレスを入力してください"
       return
     }
 
     isLoading = true
     errorMessage = nil
 
+    defer {
+      isLoading = false
+    }
+
     store.signUp(
-      email: email.trimmingCharacters(in: .whitespacesAndNewlines),
+      email: trimmedEmail,
       password: password,
-      displayName: displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+      displayName: trimmedDisplayName
     )
-
-    isLoading = false
-  }
-
-  private func validateBeforeSubmit() -> String? {
-    let trimmedName = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
-    let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
-
-    if trimmedName.isEmpty {
-      return "表示名を入力してください"
-    }
-
-    if trimmedEmail.isEmpty {
-      return "メールアドレスを入力してください"
-    }
-
-    if !TextValidator.isValidPassword(password) {
-      return "パスワードは6文字以上で入力してください"
-    }
-
-    if !agreedToTerms {
-      return "利用規約とプライバシーポリシーへの同意が必要です"
-    }
-
-    return nil
   }
 }

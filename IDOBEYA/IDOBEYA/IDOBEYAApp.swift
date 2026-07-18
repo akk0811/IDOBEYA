@@ -2,13 +2,11 @@ import SwiftUI
 
 @main
 struct IDOBEYAApp: App {
-  /// 将来 Firebase 実装に差し替える場合はここだけ変更
-  @StateObject private var store = MockAppStore.shared
-
   var body: some Scene {
     WindowGroup {
       RootView()
-        .environmentObject(store)
+        // StateObject(shared) だと購読が不安定になることがあるため、同一インスタンスを直接渡す
+        .environmentObject(MockAppStore.shared)
     }
   }
 }

@@ -53,7 +53,7 @@ struct SignUpView: View {
     .navigationBarTitleDisplayMode(.inline)
     .onChange(of: store.isAuthenticated) { _, isAuthenticated in
       #if DEBUG
-      print("SignUpView authentication state:", isAuthenticated)
+      print("SignUpView authentication changed:", isAuthenticated)
       #endif
       // RootView が MainTabView へ切り替えるため、ここでは dismiss しない
     }
