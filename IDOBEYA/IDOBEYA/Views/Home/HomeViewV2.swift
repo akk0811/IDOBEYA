@@ -85,7 +85,9 @@ struct HomeViewV2: View {
 
   private var emptyContent: some View {
     EmptyStateView(
-      preset: .noJoinedRooms,
+      iconName: "door.left.hand.open",
+      title: "まだ部屋がありません",
+      message: "気になる部屋を探して、ゆっくり覗いてみませんか",
       buttonTitle: "部屋を探す",
       buttonAction: {}
     )
@@ -121,7 +123,9 @@ struct HomeViewV2: View {
               activityLabel: room.activityLabel,
               onTap: { selectedRoom = RoomDetailItem(homeRoom: room) }
             )
-            .frame(width: AppTheme.spacing.massive * 4 + AppTheme.spacing.lg)
+            .containerRelativeFrame(.horizontal) { width, _ in
+              min(width * 0.82, AppTheme.spacing.massive * 4 + AppTheme.spacing.lg)
+            }
           }
         }
         .padding(.vertical, AppTheme.spacing.xxs)
@@ -199,4 +203,14 @@ struct HomeViewV2: View {
     trendingRooms: [],
     latestPosts: []
   )
+}
+
+#Preview("Home V2 — Dark") {
+  HomeViewV2()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Home V2 — Large Text") {
+  HomeViewV2()
+    .environment(\.sizeCategory, .accessibilityExtraExtraLarge)
 }

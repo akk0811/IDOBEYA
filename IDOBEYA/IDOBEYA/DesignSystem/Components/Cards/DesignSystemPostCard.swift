@@ -31,6 +31,7 @@ struct PostCard: View {
           .font(AppTheme.typography.presets.body.font())
           .foregroundStyle(AppTheme.colors.textPrimary)
           .multilineTextAlignment(.leading)
+          .fixedSize(horizontal: false, vertical: true)
           .frame(maxWidth: .infinity, alignment: .leading)
         footer
       }

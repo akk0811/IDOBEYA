@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Design System v1.0 ベースの部屋詳細画面（STEP6）
 ///
-/// 本番導線には未組み込み。`MainTabView` は従来の `RoomView` を使用します。
+/// Home / Search から遷移する部屋詳細。単体確認は Preview / DeveloperMenu で行います。
 struct RoomDetailViewV2: View {
   @Environment(\.dismiss) private var dismiss
 
@@ -130,22 +130,36 @@ struct RoomDetailViewV2: View {
       .frame(width: AppTheme.spacing.xxl, height: AppTheme.spacing.xxl)
       .background(AppTheme.colors.primary.opacity(0.1))
       .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.medium))
+      .accessibilityHidden(true)
   }
 
   private var metadataRow: some View {
-    HStack(spacing: AppTheme.spacing.sm) {
-      Label {
-        Text("\(room.memberCount)人参加中")
+    ViewThatFits(in: .horizontal) {
+      HStack(spacing: AppTheme.spacing.sm) {
+        memberCountLabel
+        Text("·")
+          .accessibilityHidden(true)
+        Text(visibilityLabel)
           .font(AppTheme.typography.presets.caption.font())
-      } icon: {
-        Image(systemName: "person.2")
       }
-      Text("·")
-      Text(visibilityLabel)
-        .font(AppTheme.typography.presets.caption.font())
+      VStack(alignment: .leading, spacing: AppTheme.spacing.xxs) {
+        memberCountLabel
+        Text(visibilityLabel)
+          .font(AppTheme.typography.presets.caption.font())
+      }
     }
     .foregroundStyle(AppTheme.colors.textSecondary)
     .padding(.top, AppTheme.spacing.xxs)
+  }
+
+  private var memberCountLabel: some View {
+    Label {
+      Text("\(room.memberCount)人参加中")
+        .font(AppTheme.typography.presets.caption.font())
+    } icon: {
+      Image(systemName: "person.2")
+        .accessibilityHidden(true)
+    }
   }
 
   private var visibilityLabel: String {
@@ -243,8 +257,8 @@ struct RoomDetailViewV2: View {
       if members.isEmpty {
         EmptyStateView(
           iconName: "person.2",
-          title: "メンバーがいません",
-          message: "この部屋にはまだメンバーがいません。"
+          title: "まだメンバーがいません",
+          message: "最初の参加者が現れると、ここに表示されます"
         )
       } else {
         VStack(spacing: AppTheme.spacing.sm) {
@@ -265,7 +279,8 @@ struct RoomDetailViewV2: View {
             Text(member.displayName)
               .font(AppTheme.typography.presets.subHeading.font())
               .foregroundStyle(AppTheme.colors.textPrimary)
-              .lineLimit(1)
+              .lineLimit(2)
+              .fixedSize(horizontal: false, vertical: true)
             if let badge = memberBadge(member.role) {
               AppBadge(variant: badge)
             }
@@ -343,20 +358,25 @@ struct RoomDetailViewV2: View {
       HStack(spacing: AppTheme.spacing.sm) {
         Image(systemName: "square.and.pencil")
           .font(.system(size: AppTheme.typography.sizes.body, weight: AppTheme.typography.weights.medium))
+          .accessibilityHidden(true)
         Text("なにか話してみる")
           .font(AppTheme.typography.presets.body.font())
           .fontWeight(AppTheme.typography.weights.medium)
+          .lineLimit(2)
+          .fixedSize(horizontal: false, vertical: true)
         Spacer(minLength: 0)
       }
       .foregroundStyle(AppTheme.colors.textSecondary)
       .padding(.horizontal, AppTheme.spacing.md)
-      .frame(height: AppTheme.spacing.huge)
+      .padding(.vertical, AppTheme.spacing.sm)
+      .frame(minHeight: AppTheme.spacing.minTapTarget)
       .background(AppTheme.colors.background)
       .clipShape(Capsule())
       .overlay(
         Capsule()
           .stroke(AppTheme.colors.border, lineWidth: 1)
       )
+      .contentShape(Capsule())
     }
     .buttonStyle(AppButtonPressStyle())
     .accessibilityLabel("なにか話してみる")
@@ -474,4 +494,14 @@ extension RoomDetailItem {
 
 #Preview("Room Detail V2 — No Posts") {
   RoomDetailViewV2(posts: [])
+}
+
+#Preview("Room Detail V2 — Dark") {
+  RoomDetailViewV2()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Room Detail V2 — Large Text") {
+  RoomDetailViewV2(initialIsJoined: false)
+    .environment(\.sizeCategory, .accessibilityExtraExtraLarge)
 }

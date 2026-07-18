@@ -87,11 +87,14 @@ struct ToggleSettingsRow: View {
       Toggle("", isOn: $isOn)
         .labelsHidden()
         .tint(AppTheme.colors.primary)
+        .frame(minWidth: AppTheme.spacing.minTapTarget, minHeight: AppTheme.spacing.minTapTarget)
     }
     .padding(.horizontal, AppTheme.spacing.md)
     .padding(.vertical, AppTheme.spacing.sm)
+    .contentShape(Rectangle())
     .accessibilityElement(children: .combine)
     .accessibilityLabel(title)
+    .accessibilityValue(isOn ? "オン" : "オフ")
   }
 
   private var rowIcon: some View {

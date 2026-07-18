@@ -17,26 +17,32 @@ struct AppToast: View {
   let data: AppToastData
 
   var body: some View {
-    HStack(spacing: AppTheme.spacing.sm) {
+    HStack(alignment: .top, spacing: AppTheme.spacing.sm) {
       Image(systemName: iconName)
         .foregroundStyle(tintColor)
+        .accessibilityHidden(true)
 
       Text(data.message)
         .font(AppTheme.typography.presets.body.font())
         .foregroundStyle(AppTheme.colors.textPrimary)
+        .multilineTextAlignment(.leading)
+        .lineLimit(3)
+        .fixedSize(horizontal: false, vertical: true)
 
       Spacer(minLength: 0)
     }
     .padding(AppTheme.spacing.md)
+    .frame(maxWidth: .infinity, alignment: .leading)
     .background(AppTheme.colors.surface)
     .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.large))
     .overlay(
       RoundedRectangle(cornerRadius: AppTheme.radius.large)
-        .stroke(tintColor.opacity(0.2), lineWidth: 1)
+        .stroke(tintColor.opacity(0.22), lineWidth: 1)
     )
     .appShadow(AppTheme.shadow.medium)
     .accessibilityElement(children: .combine)
     .accessibilityLabel(data.message)
+    .accessibilityAddTraits(.isStaticText)
   }
 
   private var iconName: String {
@@ -60,6 +66,7 @@ struct AppToast: View {
 
 private struct AppToastModifier: ViewModifier {
   @Binding var toast: AppToastData?
+  @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   func body(content: Content) -> some View {
     content
@@ -67,20 +74,42 @@ private struct AppToastModifier: ViewModifier {
         if let toast {
           AppToast(data: toast)
             .padding(.horizontal, AppTheme.spacing.lg)
-            .padding(.top, AppTheme.spacing.sm)
-            .transition(.move(edge: .top).combined(with: .opacity))
+            .padding(.top, AppTheme.spacing.md)
+            .transition(toastTransition)
             .allowsHitTesting(false)
             .zIndex(1)
+            .onAppear {
+              UIAccessibility.post(notification: .announcement, argument: toast.message)
+            }
             .task(id: toast.id) {
               try? await Task.sleep(for: .seconds(2.5))
               guard self.toast?.id == toast.id else { return }
-              withAnimation(AppTheme.animation.presets.transition.animation) {
-                self.toast = nil
-              }
+              dismissToast()
             }
         }
       }
-      .animation(AppTheme.animation.presets.transition.animation, value: toast)
+      .animation(toastAnimation, value: toast)
+  }
+
+  private var toastTransition: AnyTransition {
+    if reduceMotion {
+      return .opacity
+    }
+    return .move(edge: .top).combined(with: .opacity)
+  }
+
+  private var toastAnimation: Animation? {
+    reduceMotion ? nil : AppTheme.animation.presets.transition.animation
+  }
+
+  private func dismissToast() {
+    if reduceMotion {
+      toast = nil
+    } else {
+      withAnimation(AppTheme.animation.presets.transition.animation) {
+        toast = nil
+      }
+    }
   }
 }
 

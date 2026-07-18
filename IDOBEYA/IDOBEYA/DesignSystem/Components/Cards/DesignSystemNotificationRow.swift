@@ -55,12 +55,17 @@ struct NotificationRow: View {
       Spacer(minLength: 0)
     }
     .padding(AppTheme.spacing.md)
+    .frame(minHeight: AppTheme.spacing.minTapTarget)
     .background(rowBackground)
     .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.large))
     .overlay(
       RoundedRectangle(cornerRadius: AppTheme.radius.large)
-        .stroke(AppTheme.colors.border, lineWidth: notification.isRead ? 1 : 0)
+        .stroke(
+          notification.isRead ? AppTheme.colors.border : AppTheme.colors.primary.opacity(0.18),
+          lineWidth: 1
+        )
     )
+    .contentShape(Rectangle())
   }
 
   private var unreadDot: some View {
@@ -80,7 +85,7 @@ struct NotificationRow: View {
   }
 
   private var rowBackground: Color {
-    notification.isRead ? AppTheme.colors.surface : AppTheme.colors.background
+    notification.isRead ? AppTheme.colors.surface : AppTheme.colors.primary.opacity(0.08)
   }
 
   private var iconForeground: Color {

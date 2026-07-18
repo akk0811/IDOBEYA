@@ -12,21 +12,24 @@ struct ComposeOptionButton: View {
         Image(systemName: systemImage)
           .font(.system(size: AppTheme.typography.sizes.body, weight: AppTheme.typography.weights.medium))
           .foregroundStyle(iconColor)
-          .frame(width: AppTheme.spacing.xxl, height: AppTheme.spacing.xxl)
+          .frame(width: AppTheme.spacing.minTapTarget, height: AppTheme.spacing.minTapTarget)
           .background(iconBackground)
           .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.medium))
           .overlay(
             RoundedRectangle(cornerRadius: AppTheme.radius.medium)
               .stroke(AppTheme.colors.border, lineWidth: 1)
           )
+          .accessibilityHidden(true)
 
         Text(title)
           .font(AppTheme.typography.presets.caption.font())
           .foregroundStyle(labelColor)
-          .lineLimit(1)
-          .minimumScaleFactor(0.85)
+          .lineLimit(2)
+          .multilineTextAlignment(.center)
+          .fixedSize(horizontal: false, vertical: true)
       }
       .frame(maxWidth: .infinity)
+      .frame(minHeight: AppTheme.spacing.huge)
       .contentShape(Rectangle())
     }
     .buttonStyle(AppButtonPressStyle())

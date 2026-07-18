@@ -24,13 +24,16 @@ struct AppSearchBar: View {
           } label: {
             Image(systemName: "xmark.circle.fill")
               .foregroundStyle(AppTheme.colors.textSecondary)
+              .frame(minWidth: AppTheme.spacing.minTapTarget, minHeight: AppTheme.spacing.minTapTarget)
+              .contentShape(Rectangle())
           }
           .accessibilityLabel("検索をクリア")
         }
       }
       .padding(.horizontal, AppTheme.spacing.md)
-      .padding(.vertical, AppTheme.spacing.sm)
-      .background(AppTheme.colors.background)
+      .padding(.vertical, AppTheme.spacing.xs)
+      .frame(minHeight: AppTheme.spacing.minTapTarget)
+      .background(AppTheme.colors.surface)
       .overlay(
         RoundedRectangle(cornerRadius: AppTheme.radius.full)
           .stroke(AppTheme.colors.border, lineWidth: 1)

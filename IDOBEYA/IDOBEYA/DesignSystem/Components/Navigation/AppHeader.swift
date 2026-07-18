@@ -67,15 +67,20 @@ struct AppHeader: View {
       Text(title)
         .font(AppTheme.typography.presets.heading.font())
         .foregroundStyle(AppTheme.colors.textPrimary)
-        .lineLimit(1)
+        .lineLimit(2)
+        .multilineTextAlignment(.center)
+        .fixedSize(horizontal: false, vertical: true)
       if let subtitle {
         Text(subtitle)
           .font(AppTheme.typography.presets.caption.font())
           .foregroundStyle(AppTheme.colors.textSecondary)
-          .lineLimit(1)
+          .lineLimit(2)
+          .multilineTextAlignment(.center)
+          .fixedSize(horizontal: false, vertical: true)
       }
     }
-    .multilineTextAlignment(.center)
+    .frame(maxWidth: .infinity)
+    .layoutPriority(1)
     .accessibilityElement(children: .combine)
     .accessibilityAddTraits(.isHeader)
   }

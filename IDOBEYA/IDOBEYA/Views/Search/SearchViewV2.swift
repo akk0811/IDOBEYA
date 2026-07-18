@@ -52,6 +52,7 @@ struct SearchViewV2: View {
         .padding(.top, AppTheme.spacing.sm)
         .padding(.bottom, AppTheme.spacing.xl)
       }
+      .scrollDismissesKeyboard(.interactively)
 
       if showBottomTabBar {
         BottomTabBar(selection: $selectedTab)
@@ -60,6 +61,19 @@ struct SearchViewV2: View {
     .background(AppTheme.colors.background)
     .navigationDestination(item: $selectedRoom) { room in
       RoomDetailViewV2(room: room)
+    }
+    .toolbar {
+      ToolbarItemGroup(placement: .keyboard) {
+        Spacer()
+        Button("完了") {
+          UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder),
+            to: nil,
+            from: nil,
+            for: nil
+          )
+        }
+      }
     }
   }
 
@@ -168,8 +182,8 @@ struct SearchViewV2: View {
       if filteredRooms.isEmpty {
         EmptyStateView(
           iconName: "magnifyingglass",
-          title: "該当する部屋が見つかりませんでした",
-          message: "キーワードやカテゴリーを変えて探してみましょう"
+          title: "条件に合う部屋が見つかりませんでした",
+          message: "検索条件を少し変えてみてください"
         )
         .padding(.top, AppTheme.spacing.md)
       } else {
@@ -225,4 +239,14 @@ struct SearchViewV2: View {
 
 #Preview("Search V2 — No Results") {
   SearchViewV2(previewSearchText: "存在しないキーワード")
+}
+
+#Preview("Search V2 — Dark") {
+  SearchViewV2()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Search V2 — Large Text") {
+  SearchViewV2()
+    .environment(\.sizeCategory, .accessibilityExtraExtraLarge)
 }

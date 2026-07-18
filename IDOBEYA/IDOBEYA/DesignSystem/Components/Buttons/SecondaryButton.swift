@@ -13,8 +13,13 @@ struct SecondaryButton: View {
         .font(AppTheme.typography.presets.body.font())
         .fontWeight(AppTheme.typography.weights.semibold)
         .foregroundStyle(isDisabled ? AppTheme.colors.primary.opacity(0.4) : AppTheme.colors.primary)
+        .multilineTextAlignment(.center)
+        .lineLimit(2)
+        .fixedSize(horizontal: false, vertical: true)
+        .padding(.horizontal, AppTheme.spacing.md)
+        .padding(.vertical, AppTheme.spacing.sm)
         .frame(maxWidth: .infinity)
-        .frame(height: height)
+        .frame(minHeight: height)
         .background(AppTheme.colors.surface)
         .overlay(
           Capsule()
@@ -24,6 +29,7 @@ struct SecondaryButton: View {
             )
         )
         .clipShape(Capsule())
+        .contentShape(Capsule())
     }
     .buttonStyle(AppButtonPressStyle())
     .disabled(isDisabled)

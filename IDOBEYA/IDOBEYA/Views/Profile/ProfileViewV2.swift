@@ -105,7 +105,7 @@ struct ProfileViewV2: View {
   }
 
   private var profileBadges: some View {
-    HStack(spacing: AppTheme.spacing.xs) {
+    FlowLayout(spacing: AppTheme.spacing.xs) {
       AppBadge(variant: .joined)
 
       ForEach(profile.interestTags, id: \.self) { tag in
@@ -144,30 +144,48 @@ struct ProfileViewV2: View {
   // MARK: - Activity Summary
 
   private var activitySummary: some View {
-    HStack(spacing: AppTheme.spacing.md) {
-      summaryItem(title: "参加部屋", value: profile.joinedRoomCount)
-      summaryItem(title: "投稿", value: profile.postCount)
-      summaryItem(title: "いいね", value: profile.likeCount)
+    ViewThatFits(in: .horizontal) {
+      HStack(spacing: AppTheme.spacing.md) {
+        summaryItem(title: "参加部屋", value: profile.joinedRoomCount)
+        summaryItem(title: "投稿", value: profile.postCount)
+        summaryItem(title: "いいね", value: profile.likeCount)
+      }
+      VStack(alignment: .leading, spacing: AppTheme.spacing.sm) {
+        summaryItem(title: "参加部屋", value: profile.joinedRoomCount, aligned: .leading)
+        summaryItem(title: "投稿", value: profile.postCount, aligned: .leading)
+        summaryItem(title: "いいね", value: profile.likeCount, aligned: .leading)
+      }
     }
     .padding(AppTheme.spacing.md)
+    .frame(maxWidth: .infinity, alignment: .leading)
     .background(AppTheme.colors.surface)
     .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.large))
     .overlay(
       RoundedRectangle(cornerRadius: AppTheme.radius.large)
         .stroke(AppTheme.colors.border, lineWidth: 1)
     )
+    .accessibilityElement(children: .combine)
+    .accessibilityLabel(
+      "参加部屋\(profile.joinedRoomCount)、投稿\(profile.postCount)、いいね\(profile.likeCount)"
+    )
   }
 
-  private func summaryItem(title: String, value: Int) -> some View {
-    VStack(spacing: AppTheme.spacing.xxs) {
+  private func summaryItem(
+    title: String,
+    value: Int,
+    aligned: HorizontalAlignment = .center
+  ) -> some View {
+    VStack(alignment: aligned, spacing: AppTheme.spacing.xxs) {
       Text(title)
         .font(AppTheme.typography.presets.caption.font())
         .foregroundStyle(AppTheme.colors.textSecondary)
+        .lineLimit(2)
+        .fixedSize(horizontal: false, vertical: true)
       Text("\(value)")
         .font(AppTheme.typography.presets.subHeading.font())
         .foregroundStyle(AppTheme.colors.textPrimary)
     }
-    .frame(maxWidth: .infinity)
+    .frame(maxWidth: .infinity, alignment: Alignment(horizontal: aligned, vertical: .center))
   }
 
   // MARK: - Tabs
@@ -365,4 +383,14 @@ struct ProfileViewV2: View {
 
 #Preview("Profile V2 — No Joined Rooms") {
   ProfileViewV2(joinedRooms: [])
+}
+
+#Preview("Profile V2 — Dark") {
+  ProfileViewV2()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Profile V2 — Large Text") {
+  ProfileViewV2()
+    .environment(\.sizeCategory, .accessibilityExtraExtraLarge)
 }

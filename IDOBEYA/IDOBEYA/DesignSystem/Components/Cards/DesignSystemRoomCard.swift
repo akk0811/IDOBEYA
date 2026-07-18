@@ -28,24 +28,24 @@ struct RoomCard: View {
       HStack(alignment: .top, spacing: AppTheme.spacing.sm) {
         roomIcon
         VStack(alignment: .leading, spacing: AppTheme.spacing.xxs) {
-          HStack(spacing: AppTheme.spacing.xs) {
-            Text(name)
-              .font(AppTheme.typography.presets.subHeading.font())
-              .foregroundStyle(AppTheme.colors.textPrimary)
-              .lineLimit(1)
-            if !badges.isEmpty {
-              HStack(spacing: AppTheme.spacing.xxs) {
-                ForEach(badges.indices, id: \.self) { index in
-                  AppBadge(variant: badges[index], label: badgeLabel(badges[index]))
-                }
+          Text(name)
+            .font(AppTheme.typography.presets.subHeading.font())
+            .foregroundStyle(AppTheme.colors.textPrimary)
+            .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
+          if !badges.isEmpty {
+            FlowLayout(spacing: AppTheme.spacing.xxs) {
+              ForEach(badges.indices, id: \.self) { index in
+                AppBadge(variant: badges[index], label: badgeLabel(badges[index]))
               }
             }
           }
           Text(description)
             .font(AppTheme.typography.presets.body.font())
             .foregroundStyle(AppTheme.colors.textSecondary)
-            .lineLimit(2)
+            .lineLimit(3)
             .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: true)
           if !moodBadges.isEmpty {
             FlowLayout(spacing: AppTheme.spacing.xxs) {
               ForEach(moodBadges.prefix(3), id: \.self) { mood in
@@ -72,12 +72,14 @@ struct RoomCard: View {
       .frame(width: AppTheme.spacing.xxl, height: AppTheme.spacing.xxl)
       .background(AppTheme.colors.primary.opacity(0.1))
       .clipShape(RoundedRectangle(cornerRadius: AppTheme.radius.medium))
+      .accessibilityHidden(true)
   }
 
   private var memberRow: some View {
     HStack(spacing: AppTheme.spacing.xxs) {
       Image(systemName: "person.2")
         .font(.system(size: AppTheme.typography.sizes.caption))
+        .accessibilityHidden(true)
       Text("\(memberCount)人が参加")
         .font(AppTheme.typography.presets.caption.font())
     }

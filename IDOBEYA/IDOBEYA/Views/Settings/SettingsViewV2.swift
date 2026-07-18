@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Design System v1.0 ベースの設定画面（STEP10）
 ///
-/// 本番導線には未組み込み。`MainTabView` は従来の `SettingsView` を使用します。
+/// Profile から遷移。単体確認時は Preview / DeveloperMenu で下部タブを表示できます。
 struct SettingsViewV2: View {
   @Environment(\.dismiss) private var dismiss
 
@@ -57,7 +57,7 @@ struct SettingsViewV2: View {
         }
         .padding(.horizontal, AppTheme.spacing.lg)
         .padding(.top, AppTheme.spacing.sm)
-        .padding(.bottom, AppTheme.spacing.xl)
+        .padding(.bottom, AppTheme.spacing.xxl)
       }
 
       if showBottomTabBar {
@@ -124,4 +124,14 @@ struct SettingsViewV2: View {
       .system: false,
     ]
   )
+}
+
+#Preview("Settings V2 — Dark") {
+  SettingsViewV2()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Settings V2 — Large Text") {
+  SettingsViewV2()
+    .environment(\.sizeCategory, .accessibilityExtraExtraLarge)
 }

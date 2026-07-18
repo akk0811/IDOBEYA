@@ -33,10 +33,6 @@ struct AppTextEditor: View {
           .padding(.vertical, AppTheme.spacing.xs)
           .frame(minHeight: AppTheme.spacing.massive * 2)
           .disabled(isDisabled)
-          .onChange(of: text) { _, newValue in
-            guard let maxLength, newValue.count > maxLength else { return }
-            text = String(newValue.prefix(maxLength))
-          }
       }
       .background(AppTheme.colors.surface)
       .overlay(

@@ -12,20 +12,26 @@ struct AppChip: View {
         if let systemImage {
           Image(systemName: systemImage)
             .font(.system(size: AppTheme.typography.sizes.caption, weight: AppTheme.typography.weights.medium))
+            .accessibilityHidden(true)
         }
         Text(title)
           .font(AppTheme.typography.presets.caption.font())
           .fontWeight(AppTheme.typography.weights.medium)
+          .lineLimit(2)
+          .multilineTextAlignment(.center)
+          .fixedSize(horizontal: false, vertical: true)
       }
       .foregroundStyle(isSelected ? AppTheme.colors.surface : AppTheme.colors.textPrimary)
       .padding(.horizontal, AppTheme.spacing.sm)
       .padding(.vertical, AppTheme.spacing.xs)
+      .frame(minHeight: AppTheme.spacing.minTapTarget)
       .background(isSelected ? AppTheme.colors.primary : AppTheme.colors.surface)
       .overlay(
         Capsule()
           .stroke(isSelected ? AppTheme.colors.primary : AppTheme.colors.border, lineWidth: 1)
       )
       .clipShape(Capsule())
+      .contentShape(Capsule())
     }
     .buttonStyle(AppButtonPressStyle())
     .accessibilityLabel(title)

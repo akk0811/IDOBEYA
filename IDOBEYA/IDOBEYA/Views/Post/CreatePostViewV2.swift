@@ -54,10 +54,19 @@ struct CreatePostViewV2: View {
         .padding(.top, AppTheme.spacing.sm)
         .padding(.bottom, AppTheme.spacing.xl)
       }
+      .scrollDismissesKeyboard(.interactively)
     }
     .background(AppTheme.colors.background)
     .appToast($toast)
     .toolbar(.hidden, for: .navigationBar)
+    .toolbar {
+      ToolbarItemGroup(placement: .keyboard) {
+        Spacer()
+        Button("完了") {
+          dismissKeyboard()
+        }
+      }
+    }
   }
 
   // MARK: - Header
@@ -122,7 +131,8 @@ struct CreatePostViewV2: View {
             Text(destinationRoom.name)
               .font(AppTheme.typography.presets.subHeading.font())
               .foregroundStyle(AppTheme.colors.textPrimary)
-              .lineLimit(1)
+              .lineLimit(2)
+              .fixedSize(horizontal: false, vertical: true)
             Text(destinationSummary)
               .font(AppTheme.typography.presets.caption.font())
               .foregroundStyle(AppTheme.colors.textSecondary)
@@ -133,6 +143,7 @@ struct CreatePostViewV2: View {
           Image(systemName: "chevron.right")
             .font(.system(size: AppTheme.typography.sizes.caption, weight: AppTheme.typography.weights.semibold))
             .foregroundStyle(AppTheme.colors.textSecondary)
+            .accessibilityHidden(true)
         }
       }
       .accessibilityElement(children: .combine)
@@ -302,6 +313,15 @@ struct CreatePostViewV2: View {
     bodyText += separator + hint.prompt
   }
 
+  private func dismissKeyboard() {
+    UIApplication.shared.sendAction(
+      #selector(UIResponder.resignFirstResponder),
+      to: nil,
+      from: nil,
+      for: nil
+    )
+  }
+
   // MARK: - Helpers
 
   private func sectionTitle(_ title: String) -> some View {
@@ -326,4 +346,16 @@ struct CreatePostViewV2: View {
   CreatePostViewV2(
     previewBodyText: String(repeating: "あ", count: MockCreatePost.maxCharacterCount + 1)
   )
+}
+
+#Preview("Create Post V2 — Dark") {
+  CreatePostViewV2()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Create Post V2 — Large Text") {
+  CreatePostViewV2(
+    previewBodyText: "今日は少し疲れたので、ゆるく話せる場所があって安心しました。"
+  )
+  .environment(\.sizeCategory, .accessibilityExtraExtraLarge)
 }

@@ -18,19 +18,19 @@ struct EmptyStateView: View {
 
     var title: String {
       switch self {
-      case .noPosts: "まだ投稿がありません"
+      case .noPosts: "まだ投稿はありません"
       case .noNotifications: "通知はありません"
-      case .noSearchResults: "検索結果がありません"
+      case .noSearchResults: "条件に合う部屋が見つかりませんでした"
       case .noJoinedRooms: "参加している部屋はありません"
       }
     }
 
     var message: String {
       switch self {
-      case .noPosts: "最初の投稿をして、部屋の会話を始めましょう。"
-      case .noNotifications: "いいねやコメントがあると、ここに表示されます。"
-      case .noSearchResults: "別のキーワードで探してみてください。"
-      case .noJoinedRooms: "気になる部屋を見つけて、参加してみましょう。"
+      case .noPosts: "最初の会話をゆっくり始めてみませんか"
+      case .noNotifications: "新しい反応やお知らせが届くとここに表示されます"
+      case .noSearchResults: "検索条件を少し変えてみてください"
+      case .noJoinedRooms: "気になる部屋を探してみましょう"
       }
     }
   }
@@ -69,16 +69,19 @@ struct EmptyStateView: View {
         .font(.system(size: AppTheme.typography.sizes.display, weight: AppTheme.typography.weights.regular))
         .foregroundStyle(AppTheme.colors.primary.opacity(0.7))
         .padding(.bottom, AppTheme.spacing.xs)
+        .accessibilityHidden(true)
 
       Text(title)
         .font(AppTheme.typography.presets.heading.font())
         .foregroundStyle(AppTheme.colors.textPrimary)
         .multilineTextAlignment(.center)
+        .fixedSize(horizontal: false, vertical: true)
 
       Text(message)
         .font(AppTheme.typography.presets.body.font())
         .foregroundStyle(AppTheme.colors.textSecondary)
         .multilineTextAlignment(.center)
+        .fixedSize(horizontal: false, vertical: true)
 
       if let buttonTitle, let buttonAction {
         PrimaryButton(title: buttonTitle, action: buttonAction)

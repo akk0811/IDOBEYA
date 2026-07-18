@@ -90,12 +90,8 @@ struct NotificationViewV2: View {
   }
 
   private var emptyContent: some View {
-    EmptyStateView(
-      iconName: "bell.slash",
-      title: "通知はありません",
-      message: "新しい反応やお知らせが届くとここに表示されます"
-    )
-    .padding(.top, AppTheme.spacing.xl)
+    EmptyStateView(preset: .noNotifications)
+      .padding(.top, AppTheme.spacing.xl)
   }
 
   // MARK: - Actions
@@ -152,4 +148,29 @@ private extension NotificationItem {
   NotificationViewV2(
     notifications: MockNotifications.filtered(by: .like)
   )
+}
+
+#Preview("Notification V2 — All Read") {
+  NotificationViewV2(
+    notifications: MockNotifications.all.map {
+      NotificationItem(
+        id: $0.id,
+        type: $0.type,
+        title: $0.title,
+        body: $0.body,
+        createdAt: $0.createdAt,
+        isRead: true
+      )
+    }
+  )
+}
+
+#Preview("Notification V2 — Dark") {
+  NotificationViewV2()
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Notification V2 — Large Text") {
+  NotificationViewV2()
+    .environment(\.sizeCategory, .accessibilityExtraExtraLarge)
 }
