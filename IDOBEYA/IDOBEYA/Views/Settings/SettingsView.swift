@@ -18,8 +18,8 @@ struct SettingsView: View {
           settingsRow(icon: "key", title: "アカウント", destination: SettingsPlaceholderView(title: "アカウント"))
         }
         settingsGroup {
-          settingsRow(icon: "doc.text", title: "利用規約", destination: SettingsPlaceholderView(title: "利用規約"))
-          settingsRow(icon: "lock.doc", title: "プライバシーポリシー", destination: SettingsPlaceholderView(title: "プライバシーポリシー"))
+          settingsRow(icon: "doc.text", title: "利用規約", destination: TermsOfServiceView())
+          settingsRow(icon: "lock.doc", title: "プライバシーポリシー", destination: PrivacyPolicyView())
         }
         IDOButton(title: "ログアウト", style: .danger) {
           showLogoutConfirm = true

@@ -14,6 +14,7 @@ struct SettingsViewV2: View {
 
   @State private var toggleStates: [SettingsToggleID: Bool]
   @State private var selectedBottomTab = BottomTabBar.Tab.profile
+  @State private var selectedLegalDocument: LegalDocumentRoute?
 
   init(
     profile: ProfileUserItem = MockProfileUsers.akiko,
@@ -47,7 +48,7 @@ struct SettingsViewV2: View {
             SettingsSectionView(
               section: section,
               toggleStates: $toggleStates,
-              onRowTap: { _ in }
+              onRowTap: handleRowTap
             )
 
             if section.id == "notifications", areAllNotificationsDisabled {
@@ -66,6 +67,9 @@ struct SettingsViewV2: View {
     }
     .background(AppTheme.colors.background)
     .toolbar(.hidden, for: .navigationBar)
+    .navigationDestination(item: $selectedLegalDocument) { route in
+      route.destination
+    }
   }
 
   // MARK: - Account Card
@@ -105,6 +109,17 @@ struct SettingsViewV2: View {
 
         SecondaryButton(title: "プロフィールを編集", action: {})
       }
+    }
+  }
+
+  private func handleRowTap(_ row: SettingsRowItem) {
+    switch row.id {
+    case "support-terms":
+      selectedLegalDocument = .terms
+    case "support-privacy-policy":
+      selectedLegalDocument = .privacy
+    default:
+      break
     }
   }
 }

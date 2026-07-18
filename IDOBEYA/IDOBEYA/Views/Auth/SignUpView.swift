@@ -2,9 +2,12 @@ import SwiftUI
 
 struct SignUpView: View {
   @Environment(\.dismiss) private var dismiss
+
+  @ObservedObject private var store: MockAppStore
   @StateObject private var viewModel: SignUpViewModel<MockAppStore>
 
   init(store: MockAppStore) {
+    self.store = store
     _viewModel = StateObject(wrappedValue: SignUpViewModel(store: store))
   }
 
@@ -28,6 +31,14 @@ struct SignUpView: View {
             .foregroundStyle(Theme.Color.textSecondary)
         }
         .tint(Theme.Color.primary)
+
+        if let errorMessage = viewModel.errorMessage {
+          Text(errorMessage)
+            .font(IDOFont.caption())
+            .foregroundStyle(AppTheme.colors.error)
+            .fixedSize(horizontal: false, vertical: true)
+            .accessibilityLabel(errorMessage)
+        }
 
         IDOButton(
           title: "アカウント作成",
