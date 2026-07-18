@@ -49,6 +49,11 @@ final class MockAppStore: ObservableObject, AppStoring {
   func signUp(email: String, password: String, displayName: String) {
     currentUser.displayName = displayName
     isAuthenticated = true
+
+    #if DEBUG
+    print("Mock sign up succeeded")
+    print("isAuthenticated:", isAuthenticated)
+    #endif
   }
 
   func logout() {

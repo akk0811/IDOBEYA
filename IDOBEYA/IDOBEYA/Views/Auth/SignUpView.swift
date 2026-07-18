@@ -51,6 +51,12 @@ struct SignUpView: View {
     }
     .idoScreenBackground()
     .navigationBarTitleDisplayMode(.inline)
+    .onChange(of: store.isAuthenticated) { _, isAuthenticated in
+      #if DEBUG
+      print("SignUpView authentication state:", isAuthenticated)
+      #endif
+      // RootView が MainTabView へ切り替えるため、ここでは dismiss しない
+    }
   }
 
   private var passwordField: some View {

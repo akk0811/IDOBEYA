@@ -3,7 +3,7 @@ import SwiftUI
 @main
 struct IDOBEYAApp: App {
   /// 将来 Firebase 実装に差し替える場合はここだけ変更
-  @StateObject private var store: MockAppStore = .shared
+  @StateObject private var store = MockAppStore.shared
 
   var body: some Scene {
     WindowGroup {
@@ -25,6 +25,11 @@ struct RootView: View {
           LoginView(store: store)
         }
       }
+    }
+    .onChange(of: store.isAuthenticated) { _, newValue in
+      #if DEBUG
+      print("Authentication state changed:", newValue)
+      #endif
     }
   }
 }
